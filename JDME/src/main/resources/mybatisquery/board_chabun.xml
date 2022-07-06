@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jdme.common.dao.ChabunDAO">
+
+<!-- 커뮤니티 게시판 채번 -->
+<select id="getBoardComChabun" resultType="jdmeboardcomvo">
+	
+	SELECT /*+ INDEX_DESC(A SYS_C0012379) */ 
+	NVL(MAX(SUBSTR(A.JBNUM, -4)),0)  + 1 AS JBNUM
+	FROM JDME_BOARD_COM A 
+
+</select>
+
+
+<!-- 댓글 게시판 채번 -->
+<select id="getBoardReplyChabun" resultType="jdmeboardreplyvo">
+	
+	SELECT /*+ INDEX_DESC(A SYS_C0012413) */ 
+	NVL(MAX(SUBSTR(A.JRNUM, -4)),0)  + 1 AS JRNUM
+	FROM JDME_BOARD_REPLY A 
+
+</select>
+
+
+</mapper>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		 xmlns="http://xmlns.jcp.org/xml/ns/javaee" 
+		 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" 
+		 id="WebApp_ID" version="3.1">
+ 
+  <display-name>JDME</display-name>
+ 
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+  
+  
+  <!-- 1. EVENT 발생 시 처리를 설정 -->
+	<!-- 특징 : 모든 서블릿이(컨트롤러) 공유하는 root 스프링 컨테이너를 정의 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<!-- 기존 servlet-context.xml, 현존 root-context.xml -->
+		<param-value>/WEB-INF/config/root-context.xml</param-value>
+	</context-param>
+	<!-- 특징 : 모든 서블릿과 필터가 공유하는 스프링 컨테이너를 생성합니다. --><!--*스프링컨테이너는 따로 공부하기  -->
+	<!-- 쉬운 버전 : 이벤트 발생 시 <context-param>에서 정의 된 root-context.xml을 읽어 들인다-->
+	<!-- 어려운 버전 :  web.xml에 등록되어 있는 ContextLoaderListener(Java Class)가 생성된다. 
+					ContextLoaderListener 클래스는 ServletContextListener 인터페이스를 구현하고 있으며, 
+					ApplicationContext를 생성하는 역할을 수행한다. 
+	-->
+	
+	
+	<!--ApplicationContext=ApplicationContext.xml=root.xml  -->
+	<!-- 즉, 생성된 ContextLoaderListener는 root-context.xml을 loading한다 -->
+	<!-- <param-value> ~ 해당 문장이 빠지면 default로  /WEB-INF/applicationContext.xml 을 읽는다. 없으면 당연히 오류난다.-->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	
+	
+  	<!-- 2. DispatcherServlet을 설정 -->
+  <!-- 특징 : 애플리케이션 요청을 처리 -->
+  <servlet><!-- 서블렛을 웹컨테이너(서블릿컨테이너)에 등록한다. -->
+		<servlet-name>spring</servlet-name><!-- 서블릿의 닉네임 등록, 닉네임은 서블릿 클래스의 이름이 너무 길면 편의상 사용 -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class><!-- 서블릿 클래스 풀네임(패키지 명까지) -->
+		<init-param><!-- 해당 서블릿이 실행 될 때 초기 값으로 전달 될 매개변수를 적는다. 여러개 등록 무방, main()의 args[0], args[1]과 같은 개념 -->
+			<param-name>contextConfigLocation</param-name><!-- 초기값으로 전달 될 매개변수 명 -->
+			<param-value>/WEB-INF/servlet-context.xml</param-value><!-- 값 --><!-- webapplicationContext.xml -->
+		</init-param>
+		<load-on-startup>1</load-on-startup><!-- 웹 서버가 구동될 때 서블릿의 init() 메서드를 미리 실행할지 지정하고 있다. 각 서블릿의 생성/초기화 순서를 의미한다. -->
+	</servlet>
+	
+  	<servlet-mapping><!-- 앞서 등록한 서블릿을 웹 브라우저에서 호출하면서 사용하는 이름을 등록하는 코드이다.  -->
+		<servlet-name>spring</servlet-name>
+		<url-pattern>*.jdme</url-pattern><!-- 실행 시점을 지정한다. ex.) <url-pattern> /*.do </url-pattern> 로 지정하면, URL do로 끝나면 해당 서블릿이 실행된다. -->
+	</servlet-mapping>
+  
+  	 <!-- 스프링의 POST 방식 인코딩-->
+	<filter>
+		<filter-name>encodingFilter</filter-name> 
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class> 
+		<init-param> 
+			<param-name>encoding</param-name> 
+			<param-value>UTF-8</param-value> 
+		</init-param> 
+		<init-param> 
+			<param-name>forceEncoding</param-name> 
+			<param-value>true</param-value> 
+		</init-param> 
+		</filter> 
+		<filter-mapping> 
+			<filter-name>encodingFilter</filter-name> 
+			<url-pattern>/*</url-pattern> 
+	</filter-mapping>
+  
+  <!-- log4j setting -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/classes/log4j.xml</param-value>
+	</context-param>
+	<session-config>
+        <session-timeout>540</session-timeout>
+    </session-config>
+  
+  
+</web-app>

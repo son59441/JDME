@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jdme.board.com.dao.JDMEBoardComDAO" >
+	
+<insert id="jdmeBoardComInsert" parameterType="jdmeboardcomvo"> 
+		INSERT INTO JDME_BOARD_COM 
+				   ( 
+				   	 JBNUM
+				    ,JMNUM
+				    ,JBSUBJECT
+				    ,JMID
+				    ,JBCONTENT
+				    ,JBPW
+				    ,JBFILE
+				    ,JBDYN
+				    ,JBIDATE
+				    ,JBUDATE
+				    ) 
+		VALUES
+				   ( 
+				     #{jbnum}
+				    ,#{jmnum}
+				    ,#{jbsubject}
+				    ,#{jmid}
+				    ,#{jbcontent}
+				    ,#{jbpw}
+				    ,#{jbfile}
+				    ,'Y'
+				    ,SYSDATE
+				    ,SYSDATE
+				    ) 
+
+</insert>
+
+<!-- 커뮤니티 전체 게시판 조회 -->
+<select id="jdmeBoardComSelectAll" parameterType="jdmeboardcomvo" resultType="jdmeboardcomvo">
+
+		SELECT 
+			   A.JBNUM       JBNUM
+			  ,A.JMNUM		 JMNUM
+			  ,A.JBSUBJECT   JBSUBJECT
+			  ,A.JMID		 JMID
+		  	  ,A.JBCONTENT   JBCONTENT
+			  ,A.JBFILE      JBFILE
+			  ,A.JBDYN       JBDYN
+			  ,TO_CHAR(A.JBIDATE,'YYYY-MM-DD') JBIDATE
+			  ,TO_CHAR(A.JBUDATE,'YYYY-MM-DD') JBUDATE
+			
+		FROM JDME_BOARD_COM A
+		
+		WHERE A.JBDYN = 'Y'
+		ORDER BY 1 DESC
+
+
+</select>	
+	
+<!-- 커뮤니티 조건 조회 게시판 -->
+<select id="jdmeBoardComSelect" parameterType="jdmeboardcomvo" resultType="jdmeboardcomvo">
+
+		SELECT 
+			   A.JBNUM       JBNUM
+			  ,A.JMNUM		 JMNUM
+			  ,A.JBSUBJECT   JBSUBJECT
+			  ,A.JMID		 JMID
+		  	  ,A.JBCONTENT   JBCONTENT
+			  ,A.JBFILE      JBFILE
+			  ,A.JBDYN       JBDYN
+			  ,TO_CHAR(A.JBIDATE,'YYYY-MM-DD') JBIDATE
+			  ,TO_CHAR(A.JBUDATE,'YYYY-MM-DD') JBUDATE
+			
+		FROM JDME_BOARD_COM A
+		WHERE A.JBDYN = 'Y'
+		AND A.JBNUM = #{jbnum}
+
+</select>	
+		
+	
+	
+	
+	
+</mapper>
