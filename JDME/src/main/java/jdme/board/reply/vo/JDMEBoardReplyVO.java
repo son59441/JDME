@@ -16,7 +16,8 @@ public class JDMEBoardReplyVO {
 	}
 	
 	
-	public JDMEBoardReplyVO(String jrnum, String jbnum, String jrid, String jrcontent, String jrpw, String jrdate) {
+	public JDMEBoardReplyVO(String jrnum, String jbnum, String jrid, 
+						    String jrcontent, String jrpw, String jrdate) {
 		
 		this.jrnum = jrnum;
 		this.jbnum = jbnum;

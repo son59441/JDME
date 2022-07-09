@@ -17,11 +17,42 @@
 <!-- 댓글 게시판 채번 -->
 <select id="getBoardReplyChabun" resultType="jdmeboardreplyvo">
 	
-	SELECT /*+ INDEX_DESC(A SYS_C0012413) */ 
+	SELECT /*+ INDEX_DESC(A SYS_C0012435) */ 
 	NVL(MAX(SUBSTR(A.JRNUM, -4)),0)  + 1 AS JRNUM
 	FROM JDME_BOARD_REPLY A 
 
 </select>
+
+
+
+<!-- 공지사항 게시판 채번 -->
+<select id="getBoardNoticeChabun" resultType="jdmeboardnoticevo">
+	
+	SELECT /*+ INDEX_DESC(A SYS_C0012439) */ 
+	NVL(MAX(SUBSTR(A.JNNUM, -4)),0)  + 1 AS JNNUM
+	FROM JDME_BOARD_NOTICE A 
+
+</select>
+
+
+<!-- 질문 게시판 채번 -->
+<select id="getBoardQnaChabun" resultType="jdmeboardqnavo">
+	
+	SELECT /*+ INDEX_DESC(A SYS_C0012441) */ 
+	NVL(MAX(SUBSTR(A.JQNUM, -4)),0)  + 1 AS JQNUM
+	FROM JDME_BOARD_QNA A 
+
+</select>
+
+<!-- Q&A 질문 게시판 채번 -->
+<select id="getBoardQnaReplyChabun" resultType="jdmeboardqnareplyvo">
+	
+	SELECT /*+ INDEX_DESC(A SYS_C0012444) */ 
+	NVL(MAX(SUBSTR(A.JQRNUM, -4)),0)  + 1 AS JQRNUM
+	FROM JDME_BOARD_QNA_REPLY A 
+
+</select>
+
 
 
 </mapper>

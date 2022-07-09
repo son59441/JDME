@@ -35,24 +35,114 @@
 <html>
 	<head>
 	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>나에게로 와인 조건 조회 커뮤니티 게시판</title>
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript">
 	
+		$(document).ready(function(){
+			
+			// 비밀번호 확인해주기
+			$(document).on('click','#pwBtn',function(){
+				let input_kbpw = prompt("비밀번호를 입력해주세요.");
+				
+				if(input_kbpw.length > 0){
+					console.log(input_kbpw);
+					
+					let pwcheckURL = "kosmoBoardPwCheck.s";
+					let reqType = "POST";
+					let dataParam = {
+						kbnum: $("#kbnum").val(),
+						kbpw: input_kbpw,
+					};
+					
+					console.log("dataParam --> : " + dataParam);
+					
+					$.ajax({
+						
+						url: pwcheckURL,
+						type : reqType,
+						data: dataParam,
+						success : whenSuccess,
+						error : whenError
+						
+						
+					});
+					
+					function whenSuccess(resData){	
+						console.log("resData --> : " + resData);					
+						if ("ID_YES" == resData){					
+							alert("비밀번호 GOOD.");												
+							$("#updateBtn").css('background-color','yellow');	
+							if($("#updateBtn").prop("disabled")==true){
+								  $("#updateBtn").attr("disabled", false);
+							}
+						}else if ("ID_NO" == resDataFlag){
+							alert("비밀번호 BAD.");
+							return;
+						};				
+					}
+					function whenError(e){
+						console.log("e --> : " + e.responseText);
+					}
+					
+				} // end of if
+				
+				
+			}) // end of pwChk
+			
+			$.ajax({
+				url:"kosmoGetKmnum.s",
+				type:"POST",				
+				success:whenSuccess,
+				error:whenError
+			});
+			
+			function whenSuccess(resData){
+				console.log("resData >>> " + resData);		
+				$("#kmnum").val(resData);
+				//alert($("#kmnum").val());
+			}
+			
+			function whenError(e){
+				console.log("e >>> " + e.responseText);
+			}
+			
+			
+			// insert버튼
+			$(document).on('click','#insertbtn',function(){
+				location.href="JDMEBoardComInsertForm.jdme"
+			});
+					
+			// update버튼
+			$(document).on('click','#updateBtn',function(){
+				
+				$("#boardComUpdateForm").attr({
+					
+					"action":"JDMEBoardComUpdate.jdme",
+					"method":"GET",
+					"enctype":"application/x-www-form-urlencoded"
+					
+				}).submit();
+				
+			});
+			
+			
+		}); // end of ready
 	
+		
 	
-	
-	
-	
-	
-	
+	</script>
+	<link href="css/sidebar.css" rel="stylesheet" />
 	<style type="text/css">
 		
-		body{
-			background:#ebe7b9;
-		}
+		
 		
 		div {		 
 			margin: 0 auto; 		
-			border:1px solid #6d82f3;
+			border:0px solid #6d82f3;
 			display:table;
 		}			
 		
@@ -69,11 +159,11 @@
 		}
 		
 		input{
-			background:#f7f4cd;
+			background:#b7e0ed;
 		}
 	
 		textarea{
-			background:#f7f4cd;
+			background:#b7e0ed;
 		}
 		
 		.photo{
@@ -90,6 +180,62 @@
 	<body>
 		<h3>게시 글 내용</h3>
 		<hr>
+		<div class="wrapper">
+	        <!--Top menu -->
+	        <div class="sidebar">
+	           <!--profile image & text-->
+	           <div class="profile">
+	                <img src="/JDME/img/son.jpg" alt="profile_picture">
+	                <h3>Sonny</h3>
+	                <p>SoccerPlayer</p>
+         		</div>
+	            <!--menu item-->
+	            <ul>
+                <li>
+                    <a href="test.jdme" class="active">
+                        <span class="icon"><i class="fas fa-home"></i></span>
+                        <span class="item">Main</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardComInsertForm.jdme">
+                        <span class="icon"><i class="fas fa-desktop"></i></span>
+                        <span class="item">커뮤니티 글 쓰기</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardComSelectAll.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">커뮤니티 전체 게시글</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardNoticeInsertForm.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">공지사항 쓰기</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardNoticeSelectAll.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">공지사항</span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="JDMEBoardQnaInsertForm.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">Q&A 질문</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardQnaSelectAll.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">Q&A</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+	    </div>
 		<div>
 			<form name="boardComUpdateForm" id="boardComUpdateForm">
 			<table border="1">
@@ -125,10 +271,8 @@
 				</font>
 				</td>
 			<tr>
-				<td colspan="2" align="center">
-					<button type="button" id="insertbtn">글 쓰기</button>
-					<button type="button" id="selectAllBtn">글 목록</button>
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<td colspan="3" align="center">
+					<button type="button" id="insertbtn">커뮤니티 쓰러가기</button>
 					<button type="button" id="updateBtn" disabled>수정</button>
 					<button type="button" id="pwBtn">비밀번호 확인</button>
 				</td>

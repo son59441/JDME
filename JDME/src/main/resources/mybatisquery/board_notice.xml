@@ -4,6 +4,77 @@
 
 <mapper namespace="jdme.board.notice.dao.JDMEBoardNoticeDAO" >
 	
+
+<insert id="jdmeBoardNoticeInsert" parameterType="jdmeboardnoticevo"> 
+		INSERT INTO JDME_BOARD_NOTICE
+				   ( 
+						 JNNUM	
+					    ,ADMIN	
+					    ,JNSUBJECT	
+					    ,JNCONTENT	
+					    ,JNFILE	
+					    ,JNDYN	
+					    ,JNIDATE		
+					    ,JNUDATE		
+				    ) 
+		VALUES
+				   ( 
+					     #{jnnum}
+					    ,#{admin}
+					    ,#{jnsubject}
+					    ,#{jncontent}
+					    ,#{jnfile}
+					    ,'Y'
+					    ,SYSDATE
+					    ,SYSDATE
+				    ) 
+
+</insert>
+
+<!-- 커뮤니티 전체 게시판 조회 -->
+<select id="jdmeBoardNoticeSelectAll" parameterType="jdmeboardnoticevo" resultType="jdmeboardnoticevo">
+
+		SELECT 
+			   A.JNNUM       JNNUM
+			  ,A.ADMIN		 ADMIN
+			  ,A.JNSUBJECT   JNSUBJECT
+		  	  ,A.JNCONTENT   JNCONTENT
+			  ,A.JNFILE      JNFILE
+			  ,A.JNDYN       JNDYN
+			  ,TO_CHAR(A.JNIDATE,'YYYY-MM-DD') JNIDATE
+			  ,TO_CHAR(A.JNUDATE,'YYYY-MM-DD') JNUDATE
+			
+		FROM JDME_BOARD_NOTICE A
+		
+		WHERE A.JNDYN = 'Y'
+		ORDER BY 1 DESC
+
+
+</select>	
+	
+<!-- 커뮤니티 조건 조회 게시판 -->
+<select id="jdmeBoardNoticeSelect" parameterType="jdmeboardnoticevo" resultType="jdmeboardnoticevo">
+
+		SELECT 
+			   A.JNNUM       JNNUM
+			  ,A.ADMIN		 ADMIN
+			  ,A.JNSUBJECT   JNSUBJECT
+		  	  ,A.JNCONTENT   JNCONTENT
+			  ,A.JNFILE      JNFILE
+			  ,A.JNDYN       JNDYN
+			  ,TO_CHAR(A.JNIDATE,'YYYY-MM-DD') JNIDATE
+			  ,TO_CHAR(A.JNUDATE,'YYYY-MM-DD') JNUDATE
+			
+		FROM JDME_BOARD_NOTICE A
+		
+		WHERE A.JNDYN = 'Y'
+		AND A.JNNUM = #{jnnum}
+
+</select>	
+		
+	
+	
+	
 	
 
 	

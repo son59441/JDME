@@ -27,6 +27,9 @@
 	<meta charset="UTF-8">
 	<title>나에게로 와인 커뮤니티 게시판 전체조회</title>
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script type="text/javascript">
 	
 		$(document).ready(function(){
@@ -46,7 +49,7 @@
 				var insert = confirm("글 쓰기 페이지로 이동하시겠습니까?"); 
 				
 				if(insert){
-					alert("글 쓰게 페이지로 이동합니다.");
+					alert("글 쓰기 페이지로 이동합니다.");
 					
 					location.href="/JDME/JDMEBoardComInsertForm.jdme";
 					return true;
@@ -63,11 +66,7 @@
 				
 				var select = confirm("게시글을 보러가시겠습니까?");
 				
-				if($('.jbnum:checked').length == 0){
-					alert("조회 할 게시글을 선택해주세요");
-					return;
-					
-				}else if(select){
+				if(select && $('.jbnum:checked').length == 1){
 					alert("해당 글로 이동합니다.");
 					
 					$("#boardComList").attr({
@@ -78,9 +77,15 @@
 						
 					}).submit();
 					
-				}else{
-					alert("취소하셨습니다.");
+				}else if(!select){
+					alert("취소하였습니다.");
 					return false;
+				}
+				
+				if($('.jbnum:checked').length == 0){
+					alert("조회 할 게시글을 선택해주세요");
+					return;
+					
 				}
 				
 			}); // end of 조건 조회 
@@ -88,6 +93,7 @@
 		}) // end of ready
 	
 	</script>
+	<link href="css/sidebar.css" rel="stylesheet" />
 	<style type="text/css">
 	
 		td, th {
@@ -101,16 +107,68 @@
 			text-align: center;
 		}
 		
-		body{
-			background:#ebe7b9;
-		}
 		
-	
 	</style>
 	</head>
 	<body>
-		<h3>게시판 글 목록</h3>
+		<h3>커뮤니티 게시판 글 목록</h3>
 		<hr>
+		<div class="wrapper">
+	        <!--Top menu -->
+	        <div class="sidebar">
+	           <!--profile image & text-->
+	           <div class="profile">
+	                <img src="/JDME/img/son.jpg" alt="profile_picture">
+	                <h3>Sonny</h3>
+	                <p>SoccerPlayer</p>
+         		</div>
+	            <!--menu item-->
+	            <ul>
+                <li>
+                    <a href="test.jdme" class="active">
+                        <span class="icon"><i class="fas fa-home"></i></span>
+                        <span class="item">Main</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardComInsertForm.jdme">
+                        <span class="icon"><i class="fas fa-desktop"></i></span>
+                        <span class="item">커뮤니티 글 쓰기</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardComSelectAll.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">커뮤니티 전체 게시글</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardNoticeInsertForm.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">공지사항 쓰기</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardNoticeSelectAll.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">공지사항</span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="JDMEBoardQnaInsertForm.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">Q&A 질문</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="JDMEBoardQnaSelectAll.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">Q&A</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+	    </div>
 		<form name="boardComList" id="boardComList">
 			<table border="3" align="center">
 			<thead>

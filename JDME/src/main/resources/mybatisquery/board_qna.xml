@@ -4,7 +4,76 @@
 
 <mapper namespace="jdme.board.qna.dao.JDMEBoardQnaDAO" >
 	
+<insert id="jdmeBoardQnaInsert" parameterType="jdmeboardqnavo"> 
+		INSERT INTO JDME_BOARD_QNA 
+				   ( 
+				   	 JQNUM
+				    ,JMNUM
+				    ,JQSUBJECT
+				    ,JMID
+				    ,JQCONTENT
+				    ,JQFILE
+				    ,JQDYN
+				    ,JQIDATE
+				    ,JQUDATE
+				    ) 
+		VALUES
+				   ( 
+				     #{jqnum}
+				    ,#{jmnum}
+				    ,#{jqsubject}
+				    ,#{jmid}
+				    ,#{jqcontent}
+				    ,#{jqfile}
+				    ,'Y'
+				    ,SYSDATE
+				    ,SYSDATE
+				    ) 
+
+</insert>
+
+<!-- 커뮤니티 전체 게시판 조회 -->
+<select id="jdmeBoardQnaSelectAll" parameterType="jdmeboardqnavo" resultType="jdmeboardqnavo">
+
+		SELECT 
+			   A.JQNUM       JQNUM
+			  ,A.JMNUM		 JMNUM
+			  ,A.JQSUBJECT   JQSUBJECT
+			  ,A.JMID		 JMID
+		  	  ,A.JQCONTENT   JQCONTENT
+			  ,A.JQFILE      JQFILE
+			  ,A.JQDYN       JQDYN
+			  ,TO_CHAR(A.JQIDATE,'YYYY-MM-DD') JQIDATE
+			  ,TO_CHAR(A.JQUDATE,'YYYY-MM-DD') JQUDATE
+			
+		FROM JDME_BOARD_QNA A
+		
+		WHERE A.JQDYN = 'Y'
+		ORDER BY 1 DESC
+
+
+</select>	
 	
+<!-- 커뮤니티 조건 조회 게시판 -->
+<select id="jdmeBoardQnaSelect" parameterType="jdmeboardqnavo" resultType="jdmeboardqnavo">
+
+		SELECT 
+			   A.JQNUM       JQNUM
+			  ,A.JMNUM		 JMNUM
+			  ,A.JQSUBJECT   JQSUBJECT
+			  ,A.JMID		 JMID
+		  	  ,A.JQCONTENT   JQCONTENT
+			  ,A.JQFILE      JQFILE
+			  ,A.JQDYN       JQDYN
+			  ,TO_CHAR(A.JQIDATE,'YYYY-MM-DD') JQIDATE
+			  ,TO_CHAR(A.JQUDATE,'YYYY-MM-DD') JQUDATE
+			
+		FROM JDME_BOARD_QNA A
+		WHERE A.JQDYN = 'Y'
+		AND A.JQNUM = #{jqnum}
+
+</select>	
+			
 
 	
 	

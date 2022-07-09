@@ -48,8 +48,18 @@ public class FileUploadUtil {
 			System.out.println("mr >>> : " + mr);
 			System.out.println("mr.getOriginalFileName(\"jbfile\") >>> : " + mr.getOriginalFileName("jbfile"));
 			System.out.println("mr.getFilesystemName(\"jbfile\") >>> : " + mr.getFilesystemName("jbfile"));
+			System.out.println("mr.getOriginalFileName(\"jnfile\") >>> : " + mr.getOriginalFileName("jnfile"));
+			System.out.println("mr.getFilesystemName(\"jnfile\") >>> : " + mr.getFilesystemName("jnfile"));
+			System.out.println("mr.getOriginalFileName(\"jqfile\") >>> : " + mr.getOriginalFileName("jqfile"));
+			System.out.println("mr.getFilesystemName(\"jqfile\") >>> : " + mr.getFilesystemName("jqfile"));
+			
+			
+			
 			
 			ThumnailImg.thumnailFun(filePath, mr.getFilesystemName("jbfile"));
+			ThumnailImg.thumnailFun(filePath, mr.getFilesystemName("jnfile"));
+			ThumnailImg.thumnailFun(filePath, mr.getFilesystemName("jqfile"));
+			
 			bool=true;						
 		
 		}catch(Exception e) {

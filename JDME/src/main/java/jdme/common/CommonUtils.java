@@ -10,12 +10,23 @@ public abstract class CommonUtils {
 	public static final int PRODUCT_TOTAL_COUNT = 0;
 	
 
-	// 게시판
+	// 커뮤니티 게시판
 	public static final String BOARD_COM_IMG_UPLOAD_PATH = "C:\\00.KOSMO108\\02.Final\\JDME_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JDME\\upload\\board";	//
 	public static final int BOARD_COM_IMG_FILE_SIZE = 2*1024*1024; // 2MB
 	public static final String BOARD_COM_EN_CODE = "UTF-8";
 
-
+	
+	// 공지사항 게시판
+	public static final String BOARD_NOTICE_IMG_UPLOAD_PATH = "C:\\00.KOSMO108\\02.Final\\JDME_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JDME\\upload\\notice";	//
+	public static final int BOARD_NOTICE_IMG_FILE_SIZE = 2*1024*1024; // 2MB
+	public static final String BOARD_NOTICE_EN_CODE = "UTF-8";
+	
+	
+	// 질문 게시판
+	public static final String BOARD_QNA_IMG_UPLOAD_PATH = "C:\\00.KOSMO108\\02.Final\\JDME_work\\.metadata\\.plugins\\org.eclipse.wst.server.core\\tmp0\\wtpwebapps\\JDME\\upload\\qna";	//
+	public static final int BOARD_QNA_IMG_FILE_SIZE = 2*1024*1024; // 2MB
+	public static final String BOARD_QNA_EN_CODE = "UTF-8";
+	
 	
 	
 }

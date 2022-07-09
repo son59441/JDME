@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import jdme.board.com.vo.JDMEBoardComVO;
 import jdme.board.notice.vo.JDMEBoardNoticeVO;
 import jdme.board.qna.vo.JDMEBoardQnaVO;
+import jdme.board.qnareply.vo.JDMEBoardQnaReplyVO;
 import jdme.board.reply.vo.JDMEBoardReplyVO;
 import jdme.common.dao.ChabunDAO;
 
@@ -28,7 +29,7 @@ public class ChabunServiceImpl implements ChabunService {
 	@Override
 	public JDMEBoardComVO getBoardComChabun() {
 		
-		logger.info("ChabunServiceImpl 커뮤니티 게시판 채번 서비스");
+		logger.info("ChabunServiceImpl getBoardComChabun 함수 진입");
 		return chabunDAO.getBoardComChabun();
 	}
 
@@ -36,11 +37,37 @@ public class ChabunServiceImpl implements ChabunService {
 	@Override
 	public JDMEBoardReplyVO getBoardReplyChabun() {
 		
-		logger.info("ChabunServiceImpl 댓글 게시판 채번 서비스");
+		logger.info("ChabunServiceImpl getBoardReplyChabun 함수 진입");
 		return chabunDAO.getBoardReplyChabun();
 	}
 
+	// 공지사항 게시판 채번
+	@Override
+	public JDMEBoardNoticeVO getBoardNoticeChabun() {
+		
+		logger.info("ChabunServiceImpl getBoardNoticeChabun 함수 진입");
+		return chabunDAO.getBoardNoticeChabun();
+	}
 
+	// 질문 게시판 채번
+	@Override
+	public JDMEBoardQnaVO getBoardQnaChabun() {
+		
+		logger.info("ChabunServiceImpl getBoardQnaChabun 함수 진입");
+		return chabunDAO.getBoardQnaChabun();
+	}
+
+	
+	// Q&A 질문 게시판 채번
+	@Override
+	public JDMEBoardQnaReplyVO getBoardQnaReplyChabun() {
+		
+		logger.info("ChabunServiceImpl JDMEBoardQnaReplyVO 함수 진입");
+		return chabunDAO.getBoardQnaReplyChabun();
+	}
+
+
+	
 	
 	
 }

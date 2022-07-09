@@ -3,9 +3,66 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="jdme.board.reply.dao.JDMEBoardReplyDAO" >
-	
-	
 
+<!-- 댓글 등록하기 -->	
+<insert id="jdmeBoardReplyInsert" parameterType="jdmeboardreplyvo">
+	
+	INSERT INTO JDME_BOARD_REPLY
+								(
+								   JRNUM
+								  ,JBNUM
+								  ,JRID
+								  ,JRCONTENT
+								  ,JRDYN
+								  ,JRDATE
+								
+								)
+					
+						VALUES (
+								  #{jrnum}
+								 ,#{jbnum}
+								 ,#{jrid}
+								 ,#{jrcontent}
+								 ,'Y'
+								 ,SYSDATE
+								
+								)
+
+
+</insert>
+
+<!-- 댓글 전체 조회 -->
+<select id="jdmeBoardReplySelectAll" parameterType="jdmeboardreplyvo" resultType="jdmeboardreplyvo">
+
+	SELECT 
+			 A.JRNUM       JRNUM
+			,A.JBNUM	   JBNUM
+			,A.JRID		   JRID
+			,A.JRCONTENT   JRCONTENT
+			,A.JRDYN	   JRDYN
+			,TO_CHAR(A.JRDATE,'YYYY-MM-DD') JRDATE
+	
+	FROM JDME_BOARD_REPLY A
+	
+	WHERE A.JRDYN = 'Y'
+	AND A.JBNUM = #{jbnum}
+	ORDER BY 1 DESC
+
+
+</select>
+	
+<update id="jdmeBoardReplyDelete" parameterType="jdmeboardreplyvo">
+
+	UPDATE JDME_BOARD_REPLY
+	SET 
+		 JRDYN   = 'N'
+		,JRDATE = SYSDATE	
+	
+	WHERE JRDYN = 'Y' 
+	AND JRNUM = #{jrnum}
+
+
+</update>
 	
 	
 	

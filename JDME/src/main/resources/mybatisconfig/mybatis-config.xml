@@ -9,5 +9,8 @@
 	<typeAliases>
 		<typeAlias type="jdme.board.com.vo.JDMEBoardComVO" alias="jdmeboardcomvo"/>
 		<typeAlias type="jdme.board.reply.vo.JDMEBoardReplyVO" alias="jdmeboardreplyvo"/>
+		<typeAlias type="jdme.board.notice.vo.JDMEBoardNoticeVO" alias="jdmeboardnoticevo"/>
+		<typeAlias type="jdme.board.qna.vo.JDMEBoardQnaVO" alias="jdmeboardqnavo"/>
+		<typeAlias type="jdme.board.qnareply.vo.JDMEBoardQnaReplyVO" alias="jdmeboardqnareplyvo"/>
 	</typeAliases>
 </configuration>

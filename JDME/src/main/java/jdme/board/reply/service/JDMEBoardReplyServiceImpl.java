@@ -23,7 +23,7 @@ public class JDMEBoardReplyServiceImpl implements JDMEBoardReplyService {
 	@Override
 	public int jdmeBoardReplyInsert(JDMEBoardReplyVO jbrvo) {
 		
-		logger.info("KosmoRboardServiceImpl kosmoRboardInsert 함수진입");
+		logger.info("JDMEBoardReplyServiceImpl jdmeBoardReplyInsert 함수진입");
 		return jdmeBoardReplyDAO.jdmeBoardReplyInsert(jbrvo);
 	}
 
@@ -31,7 +31,7 @@ public class JDMEBoardReplyServiceImpl implements JDMEBoardReplyService {
 	@Override
 	public List<JDMEBoardReplyVO> jdmeBoardReplySelectAll(JDMEBoardReplyVO jbrvo) {
 		
-		logger.info("KosmoRboardServiceImpl jdmeBoardReplySelectAll 함수진입");
+		logger.info("JDMEBoardReplyServiceImpl jdmeBoardReplySelectAll 함수진입");
 		return jdmeBoardReplyDAO.jdmeBoardReplySelectAll(jbrvo);
 	}
 	
@@ -39,7 +39,7 @@ public class JDMEBoardReplyServiceImpl implements JDMEBoardReplyService {
 	@Override
 	public int jdmeBoardReplyDelete(JDMEBoardReplyVO jbrvo) {
 		
-		logger.info("KosmoRboardServiceImpl jdmeBoardReplyDelete 함수진입");
+		logger.info("JDMEBoardReplyServiceImpl jdmeBoardReplyDelete 함수진입");
 		return jdmeBoardReplyDAO.jdmeBoardReplyDelete(jbrvo);
 	}
 	

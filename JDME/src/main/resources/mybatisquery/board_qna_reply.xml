@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jdme.board.qnareply.dao.JDMEBoardQnaReplyDAO" >
+
+<!-- 댓글 등록하기 -->	
+<insert id="jdmeBoardQnaReplyInsert" parameterType="jdmeboardqnareplyvo">
+	
+	INSERT INTO JDME_BOARD_QNA_REPLY
+								(
+								   JQRNUM
+								  ,JQNUM
+								  ,JQRID
+								  ,JQRCONTENT
+								  ,JQRDYN
+								  ,JQRDATE
+								
+								)
+					
+						VALUES (
+								  #{jqrnum}
+								 ,#{jqnum}
+								 ,#{jqrid}
+								 ,#{jqrcontent}
+								 ,'Y'
+								 ,SYSDATE
+								
+								)
+
+
+</insert>
+
+<!-- 댓글 전체 조회 -->
+<select id="jdmeBoardQnaReplySelectAll" parameterType="jdmeboardqnareplyvo" resultType="jdmeboardqnareplyvo">
+
+	SELECT 
+			 A.JQRNUM       JQRNUM
+			,A.JQNUM	    JQNUM
+			,A.JQRID		JQRID
+			,A.JQRCONTENT   JQRCONTENT
+			,A.JQRDYN	    JQRDYN
+			,TO_CHAR(A.JQRDATE,'YYYY-MM-DD') JQRDATE
+	
+	FROM JDME_BOARD_QNA_REPLY A
+	
+	WHERE A.JQRDYN = 'Y'
+	AND A.JQNUM = #{jqnum}
+	ORDER BY 1 DESC
+
+
+</select>
+	
+<update id="jdmeBoardQnaReplyDelete" parameterType="jdmeboardqnareplyvo">
+
+	UPDATE JDME_BOARD_QNA_REPLY
+	SET 
+		 JQRDYN   = 'N'
+		,JQRDATE = SYSDATE	
+	
+	WHERE JRDYN = 'Y' 
+	AND JQRNUM = #{jqrnum}
+
+
+</update>
+	
+	
+	
+	
+	
+	
+</mapper>
+

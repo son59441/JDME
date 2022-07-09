@@ -46,7 +46,7 @@ public class JDMEBoardComController {
 	}	
 	
 	// 커뮤니티 게시판 입력하는 곳
-	@PostMapping(value="jdmeBoardComInsert")
+	@PostMapping(value="JDMEBoardComInsert")
 	public String jdmeBoardComInsert(HttpServletRequest req,JDMEBoardComVO jbcvo) {
 		
 		logger.info("JDMEBoardComController jdmeBoardComInsert 함수 진입");
