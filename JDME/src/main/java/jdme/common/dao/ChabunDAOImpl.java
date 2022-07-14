@@ -11,6 +11,7 @@ import jdme.board.notice.vo.JDMEBoardNoticeVO;
 import jdme.board.qna.vo.JDMEBoardQnaVO;
 import jdme.board.qnareply.vo.JDMEBoardQnaReplyVO;
 import jdme.board.reply.vo.JDMEBoardReplyVO;
+import jdme.member.vo.JDMEMemberVO;
 
 
 @Repository
@@ -59,6 +60,14 @@ public class ChabunDAOImpl implements ChabunDAO {
 		logger.info("ChabunDAOImpl JDMEBoardQnaReplyVO 함수 진입");
 		return sqlSession.selectOne("getBoardQnaReplyChabun");
 		
+	}
+
+	// 회원가입 채번
+	@Override
+	public JDMEMemberVO getMemberChabun() {
+		
+		logger.info("ChabunDAOImpl JDMEMemberVO 함수 진입");
+		return sqlSession.selectOne("getMemberChabun");
 	}
 
 	

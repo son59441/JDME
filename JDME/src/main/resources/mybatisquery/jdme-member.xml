@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jdme.member.dao.JDMEMemberDAO">
+	<insert id="jdmeMemberInsert" parameterType="jmvo">
+		INSERT INTO JDME_MEMBER (	 JMNUM
+									,JMNAME
+									,JMID
+									,JMPW
+									,JMBIRTH
+									,JMGENDER
+									,JMHP
+									,JMEMAIL
+									,JMZIPCODE
+									,JMADDR
+									,JMADDRDETAIL
+									,JMIMAGE
+									,JMACCESS
+									,DELETEYN
+									,INSERTDATE
+									,UPDATEDATE
+									)
+	            			VALUES( #{jmnum}, 
+	            					#{jmname}, 
+	            					#{jmid}, 
+	            					#{jmpw}, 
+	            					#{jmbirth}, 
+	            					#{jmgender},             					
+	            					#{jmhp}, 
+	            					#{jmemail},
+	            					#{jmzipcode},
+	            					#{jmaddr},
+	            					#{jmaddrdetail},
+	            					#{jmimage},
+	            					'0',
+	            					'Y', 
+	            					SYSDATE, 
+	            					SYSDATE)
+
+	</insert>
+	<!-- 아이디체크 -->
+	<select id="jdmeIdCheck"  parameterType="jmvo" resultType="jmvo">	
+	
+		SELECT 
+		        A.JMID 		JMID
+		FROM 	JDME_MEMBER A
+		WHERE 	A.DELETEYN = 'Y' 	
+		AND     A.JMID = #{jmid} 
+	
+	</select>
+	
+</mapper>

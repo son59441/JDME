@@ -40,7 +40,7 @@
 						jqrid :      $("#jqrid").val(),
 						jqrcontent : $("#jqrcontent").val(),
 				};
-				dataParam = $("#qreplyForm").serialize();
+				dataParam = $("#qnareplyForm").serialize();
 				console.log("dataParam --> : " + dataParam);
 				
 				$.ajax({
@@ -76,12 +76,12 @@
 				var target = $(this).parents(".jqrbmemoItem");	
 				console.log("target --> : " + target);
 				
-				let deleteURL = "JDEMBoardReplyDelete.jdme";
+				let deleteURL = "JDEMBoardQnaReplyDelete.jdme";
 				let method = "POST";
 				let dataParam = {
 						jqrnum : $("#jqrnum").val(jqrnumV),
 				};
-				dataParam = $("#qreplyForm").serialize();
+				dataParam = $("#qnareplyForm").serialize();
 				console.log("dataParam --> : " + dataParam);
 				
 				$.ajax({
@@ -117,7 +117,7 @@
 			let dataParam = {
 					jqrnum : $("#jqrnum").val(),
 			};
-			dataParam = $("#qreplyForm").serialize();
+			dataParam = $("#qnareplyForm").serialize();
 			console.log("dataParam --> : " + dataParam);
 			
 			$.ajax({
@@ -240,19 +240,32 @@
 		
 	
 	</script>
+	<style type="text/css">
+	
+		#replydiv{
+			
+			border:5px inset #116091;
+			
+		}
+	
+	
+	
+	</style>
 	</head>
 	<body>
-		<h3>댓글</h3>
+		
+		<br><br><br><br>	
+		<div id="replydiv">
+		<font size="3" style="color:black;">댓글</font>
 		<hr>
 		<%
 			Logger logger = LogManager.getLogger(this.getClass());
-			logger.info("JDMEBoardReplyInsertForm 페이지 진입");
+			logger.info("JDMEBoardQnaReplyInsertForm 페이지 진입");
 			
 			String jqnum = request.getParameter("jqnum");
-			logger.info("ReplyForm jqnum --> : " + jqnum);
+			logger.info("qnaReplyForm jqnum --> : " + jqnum);
 		%>
-		<div id="replydiv">
-			<form name="replyForm" id="replyForm">
+			<form name="qnareplyForm" id="qnareplyForm">
 				<table>
 					<tr>
 						<td>작성자</td>
@@ -266,7 +279,7 @@
 					<tr>
 						<td>댓글 내용</td>
 						<td>
-							<textarea name="jrcontent" id="jrcontent" rows="5" cols="50" style="resize: none"></textarea>
+							<textarea name="jqrcontent" id="jqrcontent" rows="5" cols="50" style="resize: none" placeholder="내용을 입력해 주세요"></textarea>
 							<div><span class="bytes">0</span>bytes</div>
 						</td>
 					</tr>

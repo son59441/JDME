@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jdme.board.qna.service.JDMEBoardQnaService;
 import jdme.board.qna.vo.JDMEBoardQnaVO;
@@ -75,6 +76,7 @@ public class JDMEBoardQnaController {
 		_jbqvo.setJqsubject(fu.getParameter("jqsubject"));
 		_jbqvo.setJmid(fu.getParameter("jmid"));
 		_jbqvo.setJqcontent(fu.getParameter("jqcontent"));
+		_jbqvo.setJqpw(fu.getParameter("jqpw"));
 		_jbqvo.setJqfile(fu.getFileName("jqfile"));
 		
 		logger.info("jqnum --> : " + jqnum);
@@ -82,6 +84,7 @@ public class JDMEBoardQnaController {
 		logger.info("jqsubject --> : " + fu.getParameter("jqsubject"));
 		logger.info("jmid --> : " + fu.getParameter("jmid"));
 		logger.info("jqcontent --> : " + fu.getParameter("jqcontent"));
+		logger.info("jqpw --> : " + fu.getParameter("jqpw"));
 		logger.info("jqfile --> : " + fu.getFileName("jqfile"));
 		
 		
@@ -101,13 +104,34 @@ public class JDMEBoardQnaController {
 	public String jdmeBoardQnaSelectAll(Model model, JDMEBoardQnaVO jbqvo) {
 		logger.info("JDMEBoardQnaController jdmeBoardQnaSelectAll 함수 진입");
 		
+		// 페이징 처리 하기 위한 작업 
+		int pageSize = CommonUtils.BOARD_PAGE_SIZE;
+		int groupSize = CommonUtils.BOARD_GROUP_SIZE;
+		int curPage = CommonUtils.BOARD_CUR_PAGE;
+		int totalCount = CommonUtils.BOARD_TOTAL_COUNT;
+						
+		// 페이지가 넘어 가는 지 체크해주기 위함
+		if (jbqvo.getCurPage() !=null){
+			curPage = Integer.parseInt(jbqvo.getCurPage());
+		}
+		
+		// 담아주기 위한 작업 형변환이 필요한 작업
+		jbqvo.setPageSize(String.valueOf(pageSize));
+		jbqvo.setGroupSize(String.valueOf(groupSize));
+		jbqvo.setCurPage(String.valueOf(curPage));
+		jbqvo.setTotalCount(String.valueOf(totalCount));
+		
+		
+		
 		List<JDMEBoardQnaVO> listAll = jdmeBoardQnaService.jdmeBoardQnaSelectAll(jbqvo);
 		
 		if(listAll.size() > 0) {
 			
 			logger.info("listAll --> : " + listAll);
 			
+			model.addAttribute("pagingQna", jbqvo);
 			model.addAttribute("listAll", listAll);
+			
 			return "qna/JDMEBoardQnaSelectAll";
 		}
 		
@@ -134,7 +158,57 @@ public class JDMEBoardQnaController {
 		return "qna/JDMEBoardQnaSelect";
 	}
 	
+	// 수정하기
+	@GetMapping(value="JDMEBoardQnaUpdate")
+	public String jdmeBoardQnaUpdate(HttpServletRequest req, JDMEBoardQnaVO jbqvo, Model model) {
+		
+		logger.info("JDMEBoardQnaController jdmeBoardQnaUpdate 함수 진입");
+		String jqcontent = req.getParameter("jqcontent");
+		String jqnum = req.getParameter("jqnum");
+		
+		JDMEBoardQnaVO _jbqvo = null;
+		
+		_jbqvo = new JDMEBoardQnaVO();
+		
+		_jbqvo.setJqcontent(jqcontent);
+		_jbqvo.setJqnum(jqnum);
+		logger.info("jqcontent --> : " + _jbqvo.getJqcontent());
+		logger.info("jqnum --> : " + _jbqvo.getJqnum());
+		
+		int uCnt = jdmeBoardQnaService.jdmeBoardQnaUpdate(_jbqvo);
+		
+		if(uCnt > 0) {
+			logger.info("uCnt --> : " + uCnt);
+			model.addAttribute("uCnt",uCnt);
+			return "qna/JDMEBoardQnaUpdate";
+		}
+		return "qna/JDMEBoardQnaSelectAll";
+	}
 	
-}
+	// 질문 게시판 수정 할 때 비밀번호 체크
+	@PostMapping(value="JDMEBoardQnaPwcheck")
+	@ResponseBody
+	public Object jdmeBoardQnaPwcheck(JDMEBoardQnaVO jbqvo) {
+		
+		logger.info("JDMEBoardQnaController jdmeBoardQnaPwcheck 함수 진입");
+		
+		logger.info("jbqvo.getjqpw --> : "  + jbqvo.getJqpw());
+		
+		List<JDMEBoardQnaVO> list = jdmeBoardQnaService.jdmeBoardQnaPwcheck(jbqvo);
+		
+		String msg = "";
+		if(list.size() == 1) {
+			msg = "PW_YES";
+		}else {
+			msg = "PW_NO";
+		}
+		
+		logger.info("msg --> : " + msg);
+		return msg;
+	}
+	
+	
+	
+}// end of Controller
 
 

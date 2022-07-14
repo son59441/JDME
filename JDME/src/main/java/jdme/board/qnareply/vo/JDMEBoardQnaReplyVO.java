@@ -6,7 +6,7 @@ public class JDMEBoardQnaReplyVO {
 	private String jqnum;
 	private String jqrid;
 	private String jqrcontent;
-	private String jqrpw;
+	private String jqrdyn;
 	private String jqrdate;
 	
 	
@@ -18,14 +18,14 @@ public class JDMEBoardQnaReplyVO {
 
 
 	public JDMEBoardQnaReplyVO(String jqrnum, String jqnum, String jqrid,
-							   String jqrcontent, String jqrpw,
+							   String jqrcontent, String jqrdyn,
 							   String jqrdate) {
 		
 		this.jqrnum = jqrnum;
 		this.jqnum = jqnum;
 		this.jqrid = jqrid;
 		this.jqrcontent = jqrcontent;
-		this.jqrpw = jqrpw;
+		this.jqrdyn = jqrdyn;
 		this.jqrdate = jqrdate;
 	}
 
@@ -55,8 +55,8 @@ public class JDMEBoardQnaReplyVO {
 
 
 
-	public String getJqrpw() {
-		return jqrpw;
+	public String getJqrdyn() {
+		return jqrdyn;
 	}
 
 
@@ -91,8 +91,8 @@ public class JDMEBoardQnaReplyVO {
 
 
 
-	public void setJqrpw(String jqrpw) {
-		this.jqrpw = jqrpw;
+	public void setJqrdyn(String jqrdyn) {
+		this.jqrdyn = jqrdyn;
 	}
 
 

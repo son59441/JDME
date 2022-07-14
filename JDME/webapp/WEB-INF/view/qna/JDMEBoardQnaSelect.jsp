@@ -9,7 +9,7 @@
 <% request.setCharacterEncoding("UTF-8");%> 
 <%
 	Logger logger = LogManager.getLogger(this.getClass());
-	logger.info("JDMEBoardQnaSelectAll.jsp 페이지 진입");
+	logger.info("JDMEBoardQnaSelect.jsp 페이지 진입");
 	
 	String jqnum = request.getParameter("jqnum");
 	String jmnum = request.getParameter("jmnum");
@@ -46,16 +46,16 @@
 			
 			// 비밀번호 확인해주기
 			$(document).on('click','#pwBtn',function(){
-				let input_kbpw = prompt("비밀번호를 입력해주세요.");
+				let input_jqpw = prompt("비밀번호를 입력해주세요.");
 				
-				if(input_kbpw.length > 0){
-					console.log(input_kbpw);
+				if(input_jqpw.length > 0){
+					console.log(input_jqpw);
 					
-					let pwcheckURL = "kosmoBoardPwCheck.s";
+					let pwcheckURL = "JDMEBoardQnaPwcheck.jdme";
 					let reqType = "POST";
 					let dataParam = {
-						kbnum: $("#kbnum").val(),
-						kbpw: input_kbpw,
+						jqnum: $("#jqnum").val(),
+						jqpw: input_jqpw,
 					};
 					
 					console.log("dataParam --> : " + dataParam);
@@ -73,14 +73,14 @@
 					
 					function whenSuccess(resData){	
 						console.log("resData --> : " + resData);					
-						if ("ID_YES" == resData){					
-							alert("비밀번호 GOOD.");												
-							$("#updateBtn").css('background-color','yellow');	
+						if ("PW_YES" == resData){					
+							alert("비밀번호가 일치합니다.");												
+							$("#updateBtn").css('background-color','#a9ded6');	
 							if($("#updateBtn").prop("disabled")==true){
 								  $("#updateBtn").attr("disabled", false);
 							}
-						}else if ("ID_NO" == resDataFlag){
-							alert("비밀번호 BAD.");
+						}else if ("PW_NO" == resData){
+							alert("비밀번호가 일치하지 않습니다.");
 							return;
 						};				
 					}
@@ -92,23 +92,6 @@
 				
 				
 			}) // end of pwChk
-			
-			$.ajax({
-				url:"kosmoGetKmnum.s",
-				type:"POST",				
-				success:whenSuccess,
-				error:whenError
-			});
-			
-			function whenSuccess(resData){
-				console.log("resData >>> " + resData);		
-				$("#kmnum").val(resData);
-				//alert($("#kmnum").val());
-			}
-			
-			function whenError(e){
-				console.log("e >>> " + e.responseText);
-			}
 			
 			
 			// insert버튼
@@ -138,13 +121,21 @@
 	<link href="css/sidebar.css" rel="stylesheet" />
 	<style type="text/css">
 		
+		.qna{
 		
+			margin: auto; 		
+			border:5px solid #116091;
+			display:table;
+			
+		}
 		
-		div {		 
-			margin: 0 auto; 		
+		.qnareply{
+			margin: auto; 		
 			border:0px solid #6d82f3;
 			display:table;
-		}			
+
+		}
+		
 		
 		td, th {
 			 padding: 5px;
@@ -192,7 +183,7 @@
 	            <!--menu item-->
 	            <ul>
                 <li>
-                    <a href="test.jdme" class="active">
+                    <a href="/JDME/index.jsp" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
                         <span class="item">Main</span>
                     </a>
@@ -236,40 +227,45 @@
             </ul>
         </div>
 	    </div>
-		<div>
+		<div class="qna">
 			<form name="boardQnaUpdateForm" id="boardQnaUpdateForm">
-			<table border="1">
+			<table>
+			<thead>
 			<tr>
 				<td align="center">
-				<font size="4" style="color:blue;"><%= _jbqvo.getJqsubject() %></font>
+				<font size="4" style="color:blue;"><%= _jbqvo.getJqsubject() %></font><hr>
 				<input type="hidden" name="jqnum" id="jqnum" value="<%= _jbqvo.getJqnum() %>"/>
 				<input type="hidden" name="jmnum" id="jmnum" value="<%= jmnum%>"/>
 				</td>
 			</tr>
 			<tr>
 				<td align="left">
-				<font size="1" style="color:gray;">
+				<font size="3" style="color:black">
 				최초 작성일 : <%= _jbqvo.getJqidate() %>
 				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				수정일 : <%= _jbqvo.getJqudate() %>
 				</font>
 				</td>
 			</tr>
+			</thead>
+			<tbody>
 			<tr>
 				<td align="center">
 				<img class="photo" src="/JDME/upload/qna/<%= _jbqvo.getJqfile()%>" border="1" width="150" height="100" alt="image">
 			</tr>
 			<tr>
 				<td align="center">
-					<textarea name="jbcontent" id="jbcontent" rows="5" cols="50"><%= _jbqvo.getJqcontent() %></textarea>
+					<textarea name="jqcontent" id="jqcontent" rows="5" cols="50" ><%= _jbqvo.getJqcontent() %></textarea>
 				</td>
 			</tr>
 			<tr>
 				<td align="left">
-				<font size="1" style="color:black;">
+				<font size="3" style="color:black;">
 				작성자 : <%= _jbqvo.getJmid() %>
 				</font>
 				</td>
+			</tbody>
+			<tfoot>
 			<tr>
 				<td colspan="3" align="center">
 					<button type="button" id="insertbtn">커뮤니티 쓰러가기</button>
@@ -277,12 +273,15 @@
 					<button type="button" id="pwBtn">비밀번호 확인</button>
 				</td>
 			</tr>
+			</tfoot>
 			</table>
 			</form>
 		</div>
+		<div class="qnareply">
 		<!-- 댓글 처리 해주는 루틴 -->
 		<jsp:include page="/JDMEBoardQnaReplyInsertForm.jdme">
 			<jsp:param value="<%=_jbqvo.getJqnum()%>" name="jqnum"/>
 		</jsp:include>
+		</div>
 	</body>
 </html>

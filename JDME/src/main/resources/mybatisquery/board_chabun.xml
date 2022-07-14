@@ -53,6 +53,13 @@
 
 </select>
 
+<!-- 회원가입 채번 -->
+<select id="getMemberChabun" parameterType="jmvo" resultType="jmvo">
+		SELECT 
+		NVL(MAX(SUBSTR(JMNUM, -4)), 0) + 1 AS JMNUM 
+		FROM JDME_MEMBER 
+
+</select>
 
 
 </mapper>

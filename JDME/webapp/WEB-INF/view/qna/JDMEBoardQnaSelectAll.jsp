@@ -9,6 +9,18 @@
 <% request.setCharacterEncoding("UTF-8");%>     
 <%
 	
+	//페이지 이동 할 수 있는 변수를 세팅하기
+	int pageSize = 0;
+	int groupSize = 0;
+	int curPage = 0;
+	int totalCount = 0;
+
+	// 객체 받아와주기 , 페이지 넘길 수 있게 하기
+	Object objPaging = request.getAttribute("pagingQna");
+	JDMEBoardQnaVO pagingQna = (JDMEBoardQnaVO)objPaging;
+	
+	
+
 	Logger logger = LogManager.getLogger(this.getClass());
 	logger.info("JDMEBoardQnaSelectAll.jsp 페이지 진입");
 	
@@ -111,12 +123,43 @@
 			text-align: center;
 		}
 		
+		table.type09 {
+		  border-collapse: collapse;
+		  text-align: center;
+		  line-height: 1.5;
+		  margin: auto;
+		  
+		
+		}
+		table.type09 thead th {
+		  padding: 10px;
+		  font-weight: bold;
+		  vertical-align: top;
+		  color: #369;
+		  border-bottom: 3px solid #036;
+		 
+		}
+		table.type09 tbody th {
+		  width: 150px;
+		  padding: 10px;
+		  font-weight: bold;
+		  vertical-align: top;
+		  border-bottom: 1px solid #ccc;
+		  background: #f3f6f7;
+		}
+		table.type09 td {
+		  width: 200px;
+		  padding: 10px;
+		  vertical-align: center;
+		  border-bottom: 1px solid #ccc;
+		 
+		}
 		
 	</style>
 	</head>
 	<body>
 		<h3>Q&A 게시판 글 목록</h3>
-		<hr>
+		<%@include file ="/WEB-INF/include/header_test.jsp" %>
 		<div class="wrapper">
 	        <!--Top menu -->
 	        <div class="sidebar">
@@ -129,7 +172,7 @@
 	            <!--menu item-->
 	            <ul>
                 <li>
-                    <a href="test.jdme" class="active">
+                    <a href="/JDME/index.jsp" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
                         <span class="item">Main</span>
                     </a>
@@ -174,24 +217,31 @@
         </div>
 	    </div>
 		<form name="boardqnaList" id="boardqnaList">
-			<table border="3" align="center">
-			<thead>
-				<tr>
+			<table class="type09">
+				<thead>
+				  <tr>
 					<td colspan="9"><%= nCntS %></td>
-				</tr>	
-				<tr>
-					<th><input type="checkbox" name="chkAll" id="chkAll"/></th>
-					<th>게시글</th>
-					<th>글 번호</th>
-					<th>글 제목</th>
-					<th>글 내용</th>
-					<th>사진</th>		
-				</tr>
-			</thead>
+				  </tr>	
+				  <tr>
+				  	<th><input type="checkbox" name="chkAll" id="chkAll"/></th>
+				    <th scope="cols">게시글</th>
+				    <th scope="cols">글 번호</th>
+				    <th scope="cols">글 제목</th>
+				    <th scope="cols">글 내용</th>
+				    <th scope="cols">사진</th>
+				  </tr>
+			  </thead>
 			<%
 			
 				for(int i=0; i<nCnt; i++){
 					JDMEBoardQnaVO _jbqvo = list.get(i);
+					
+					// 페이징 세팅
+					pageSize = Integer.parseInt(pagingQna.getPageSize() );
+					groupSize = Integer.parseInt(pagingQna.getGroupSize());
+					curPage = Integer.parseInt(pagingQna.getCurPage());
+					totalCount = Integer.parseInt(_jbqvo.getTotalCount());
+				
 				%>
 			<tbody>
 				<tr>
@@ -217,6 +267,20 @@
 				</td>
 			</tr>	
 			</tbody>
+			<tfoot>
+				<tr>
+					<td colspan ="10">
+						<jsp:include page="JDMEBoardQnaPaging.jsp" flush="true">
+							<jsp:param value="JDMEBoardQnaSelectAll.jdme" name="url"/>
+							<jsp:param value="" name="str"/>
+							<jsp:param value="<%= pageSize %>" name="pageSize"/>
+							<jsp:param value="<%= groupSize %>" name="groupSize"/>
+							<jsp:param value="<%= curPage %>" name="curPage"/>
+							<jsp:param value="<%= totalCount %>" name="totalCount"/>
+						</jsp:include>
+					</td>
+				</tr>
+			</tfoot>
 			</table>
 		</form>
 	</body>

@@ -265,7 +265,7 @@
 					<tr>
 						<td>댓글 내용</td>
 						<td>
-							<textarea name="jrcontent" id="jrcontent" rows="5" cols="50" style="resize: none"></textarea>
+							<textarea name="jrcontent" id="jrcontent" rows="5" cols="50" style="resize: none" placeholder="내용을 입력해 주세요"></textarea>
 							<div><span class="bytes">0</span>bytes</div>
 						</td>
 					</tr>

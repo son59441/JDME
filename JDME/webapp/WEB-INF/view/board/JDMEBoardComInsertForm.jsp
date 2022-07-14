@@ -1,5 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="jdme.common.K_Session" %>  
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="org.apache.log4j.LogManager" %>
+<%@ page import="org.apache.log4j.Logger" %>  
+   
+
+<% 
+	Logger logger = LogManager.getLogger(this.getClass());
+	
+	 K_Session ks = K_Session.getInstance();
+	 String jmid = (String)session.getAttribute("KID");
+	 String jmnum = (String)session.getAttribute("JMNUM");
+
+		
+		
+		String KID = null;
+		
+		if(session.getAttribute("KID")!=null){
+			
+			KID = (String)session.getAttribute("KID");
+			logger.info("KID >>> : " + KID);
+			
+		}else {
+			
+			PrintWriter pw = response.getWriter();
+			pw.println("<script>");
+			pw.println("alert('로그인 후 이용바랍니다.');");
+			pw.println("location.href='/JDME/jdmeLoginForm.jdme'");
+			pw.println("</script>");
+		}
+%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,11 +44,15 @@
 	
 		$(document).ready(function(){
 			
+			
 			$(document).on('click', '#jbBtn', function(){
 				
 				var insert = confirm("등록하시겠습니까?");
+			
 				
 				if(insert){
+					
+					
 					$("#boardComForm").attr({
 						
 						"action":"JDMEBoardComInsert.jdme",
@@ -27,12 +62,27 @@
 						
 					}).submit();
 					
+					Checkform();
+					
 				}else{
 					alert("취소하였습니다.");
-					return;
+					location.reload();
 				}
 				
 			}); // end of click 
+			
+			function Checkform() {
+
+			    if(boardComForm.jbcontent.value == "") {
+			    
+			    	boardComForm.jbcontent.focus();
+			        alert("내용을 입력해 주십시오.");
+			        
+			        location.reload();
+			        
+			    }
+			    
+			}
 			
 			
 		}) // end of ready
@@ -40,6 +90,7 @@
 	
 	</script>
 	<link href="css/sidebar.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="css/ui.css">
 	<style type="text/css">
 		
 		.wrap{
@@ -63,22 +114,24 @@
 		}
 		
 		
+		
 	</style>
 	</head>
 	<body>
+		<%@include file ="/WEB-INF/include/header_test.jsp" %>
 		<div class="wrapper">
 	        <!--Top menu -->
 	        <div class="sidebar">
 	           <!--profile image & text-->
 	           <div class="profile">
-	                <img src="https://img.sbs.co.kr/newimg/news/20220503/201660848_1280.jpg" alt="profile_picture">
+	                <img src="/JDME/img/son.jpg" alt="profile_picture">
 	                <h3>Sonny</h3>
 	                <p>SoccerPlayer</p>
          		</div>
 	            <!--menu item-->
 	            <ul>
                 <li>
-                    <a href="test.jdme" class="active">
+                    <a href="/JDME/index.jsp" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
                         <span class="item">Main</span>
                     </a>
@@ -122,46 +175,56 @@
             </ul>
         </div>
 	    </div>
-		<h3 align="center">커뮤니티 글 쓰기</h3>
-		<hr>
-		<form name="boardComForm" id="boardComForm">
-		<table border="3" class="wrap">
-		<tr>
-			<td colspan="2" align="center">커뮤니티</td>				
-		</tr>
-		<tr>
-			<td class="tt">글번호</td>
-			<td><input type="text" name="jbnum" id="jbnum" size="30" readonly></td>
-		</tr>
-		<tr>
-			<td class="tt">제목</td>
-			<td><input type="text" name="jbsubject" id="jbsubject" size="30"></td>
-		</tr>
-		<tr>
-			<td class="tt">내용</td>
-			<td>
-			<textarea name="jbcontent" id="jbcontent" cols="50" rows="10"></textarea>
-		</td>
-		</tr>
-		<tr>
-			<td class="tt">비밀번호</td>
-			<td><input type="password" name="jbpw" id="jbpw" maxlength="11"></td>
-		</tr>
-		<tr>
-			<td class="tt">사진</td>
-			<td>
-			<input type="file" name="jbfile" id="jbfile">
-		</td>
-		</tr>
-		<tr>
-			<td colspan="2" align="center">				
-				<input type="button" value="글쓰기" id="jbBtn">
-				<input type="hidden" name="jmnum" id="jmnum" value="M0001"/>
-				<input type="hidden" name="jmid" id="jmid" value="sonny"/>
-				<input type="reset" value="취소">
-			</td>			
-		</tr>
-		</table>
-		</form>
+	    <section id="container">
+		<div class="conbox">
+ 	 		<section class="content_wrap">
+ 	 			<h3 class="form_tit">커뮤니티 게시판!!</h3>
+				<form name="boardComForm" id="boardComForm">
+				<fieldset>
+					<div class="formlist">
+	                  <ul>
+	                    <li>
+	                      <label for="number" >글번호 : </label>
+	                      <span class="inputbox">
+	                      	<input type="text" id="jbnum" name="jbnum" readonly placeholder="빈 칸으로 두세요."/>
+	                      </span>
+	                    </li>
+	                    <li>
+	                      <label for="subject">제목 : </label>
+	                      <span class="inputbox">
+	                      	<input type="text" id="jbsubject" name="jbsubject" placeholder="제목을 작성해주세요." />
+	                      </span>
+	                    </li>
+	                    <li>
+	                      <label for="content">내용 :</label>
+	                      <span class="textbox">
+	                        <textarea id="jbcontent" name="jbcontent" placeholder="내용을 작성해 주세요"></textarea>
+	                      </span>
+	                    </li>
+	                    <li>
+	                      <label for="subject">비밀번호</label>
+	                      <span class="inputbox">
+	                      	<input type="password" id="jbpw" name="jbpw" placeholder="최대 11자리를 입력해주세요." maxlength=11/>
+	                      </span>
+	                    </li>
+	                    <li>
+	                      <label for="photo">사진</label>
+	                      <span class="imgbox">
+	                        <input type="file" name="jbfile" />
+	                      </span>
+	                    </li>
+	                  </ul>
+	                  <div class="btn_box">
+	                      <input type="button" value="글쓰기" id="jbBtn">
+						  <input type="hidden" name="jmnum" id="jmnum" value="<%=jmnum%>"/>
+						  <input type="hidden" name="jmid" id="jmid" value="<%=jmid%>"/>
+						  <input type="reset" value="취소">
+	                  </div>
+	                </div>
+				</fieldset>
+			</form>
+ 	 		</section>
+		</div>
+		</section>
 	</body>
 </html>

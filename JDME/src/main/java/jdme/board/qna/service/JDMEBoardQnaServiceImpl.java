@@ -45,4 +45,20 @@ public class JDMEBoardQnaServiceImpl implements JDMEBoardQnaService {
 		return jdmeBoardQnaDAO.jdmeBoardQnaSelect(jbqvo);
 	}
 
+	// 질문 게시판 수정하기
+	@Override
+	public int jdmeBoardQnaUpdate(JDMEBoardQnaVO jbqvo) {
+		
+		logger.info("JDMEBoardQnaServiceImpl jdmeBoardQnaUpdate 함수 진입");
+		return jdmeBoardQnaDAO.jdmeBoardQnaUpdate(jbqvo);
+	}
+
+	// 질문 게시판 수정 할 때 비밀번호 체크하기
+	@Override
+	public List<JDMEBoardQnaVO> jdmeBoardQnaPwcheck(JDMEBoardQnaVO jbqvo) {
+		
+		logger.info("JDMEBoardQnaServiceImpl jdmeBoardQnaPwcheck 함수 진입");
+		return jdmeBoardQnaDAO.jdmeBoardQnaPwcheck(jbqvo);
+	}
+
 }

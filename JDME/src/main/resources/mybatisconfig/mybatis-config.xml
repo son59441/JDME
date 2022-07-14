@@ -12,5 +12,9 @@
 		<typeAlias type="jdme.board.notice.vo.JDMEBoardNoticeVO" alias="jdmeboardnoticevo"/>
 		<typeAlias type="jdme.board.qna.vo.JDMEBoardQnaVO" alias="jdmeboardqnavo"/>
 		<typeAlias type="jdme.board.qnareply.vo.JDMEBoardQnaReplyVO" alias="jdmeboardqnareplyvo"/>
+		<typeAlias type="jdme.member.vo.JDMEMemberVO" alias="jmvo"/>
+		<typeAlias type="jdme.login.vo.TempAuthNumVO" alias="authnumvo"/>	
+		<typeAlias type="jdme.login.vo.TempPwVO" alias="tpwvo"/>
+		<typeAlias type="jdme.login.vo.ChangePwVO" alias="cpwvo"/>
 	</typeAliases>
 </configuration>

@@ -7,6 +7,8 @@
 	<title>Insert title here</title>
 	</head>
 	<body>
-		<h3>안녕하세요</h3>
+		<script>
+			location.href="/JDME/JDMEBoardQnaSelectAll.jdme";
+		</script>
 	</body>
 </html>

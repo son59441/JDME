@@ -5,11 +5,13 @@
 <%@ page import="jdme.board.notice.vo.JDMEBoardNoticeVO" %>
 <%@ page import="org.apache.log4j.LogManager" %>
 <%@ page import="org.apache.log4j.Logger" %>
+<%@ page import="jdme.common.K_Session" %>
+<%@ page import="java.io.PrintWriter" %>
 
 <% request.setCharacterEncoding("UTF-8");%> 
 <%
 	Logger logger = LogManager.getLogger(this.getClass());
-	logger.info("kosmoBoardSelectAll.jsp 페이지 진입");
+	logger.info("JDMEBoardNoticeSelectAll.jsp 페이지 진입");
 	
 	String jnnum = request.getParameter("jnnum");
 	String admin = request.getParameter("admin");
@@ -27,6 +29,35 @@
 		if (nCnt == 1){
 			_jbnvo = list.get(0);
 		}	
+		
+		
+		K_Session ks = K_Session.getInstance();
+
+		logger.info("ks >>> " + ks);
+
+		logger.info("세션키 확인  >>> : "+session.getAttribute("KID"));
+
+
+		String KID = null;
+		
+		if(session.getAttribute("KID")!=null){
+			
+			KID = (String)session.getAttribute("KID");
+			logger.info("KID >>> : " + KID);
+			
+		}else {
+			
+			PrintWriter pw = response.getWriter();
+			pw.println("<script>");
+			pw.println("alert('관리자 전용 페이지입니다.');");
+			pw.println("location.href='/JDME/JDMEBoardNoticeSelectAll.jdme'");
+			pw.println("</script>");
+		}
+
+		
+		
+		
+		
 
 %>
 
@@ -43,73 +74,7 @@
 	<script type="text/javascript">
 	
 		$(document).ready(function(){
-			
-			// 비밀번호 확인해주기
-			$(document).on('click','#pwBtn',function(){
-				let input_kbpw = prompt("비밀번호를 입력해주세요.");
-				
-				if(input_kbpw.length > 0){
-					console.log(input_kbpw);
-					
-					let pwcheckURL = "kosmoBoardPwCheck.s";
-					let reqType = "POST";
-					let dataParam = {
-						kbnum: $("#kbnum").val(),
-						kbpw: input_kbpw,
-					};
-					
-					console.log("dataParam --> : " + dataParam);
-					
-					$.ajax({
-						
-						url: pwcheckURL,
-						type : reqType,
-						data: dataParam,
-						success : whenSuccess,
-						error : whenError
-						
-						
-					});
-					
-					function whenSuccess(resData){	
-						console.log("resData --> : " + resData);					
-						if ("ID_YES" == resData){					
-							alert("비밀번호 GOOD.");												
-							$("#updateBtn").css('background-color','yellow');	
-							if($("#updateBtn").prop("disabled")==true){
-								  $("#updateBtn").attr("disabled", false);
-							}
-						}else if ("ID_NO" == resDataFlag){
-							alert("비밀번호 BAD.");
-							return;
-						};				
-					}
-					function whenError(e){
-						console.log("e --> : " + e.responseText);
-					}
-					
-				} // end of if
-				
-				
-			}) // end of pwChk
-			
-			$.ajax({
-				url:"kosmoGetKmnum.s",
-				type:"POST",				
-				success:whenSuccess,
-				error:whenError
-			});
-			
-			function whenSuccess(resData){
-				console.log("resData >>> " + resData);		
-				$("#kmnum").val(resData);
-				//alert($("#kmnum").val());
-			}
-			
-			function whenError(e){
-				console.log("e >>> " + e.responseText);
-			}
-			
+		
 			
 			// insert버튼
 			$(document).on('click','#insertbtn',function(){
@@ -191,7 +156,7 @@
 	            <!--menu item-->
 	            <ul>
                 <li>
-                    <a href="test.jdme" class="active">
+                    <a href="/JDME/index.jsp" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
                         <span class="item">Main</span>
                     </a>
@@ -238,6 +203,7 @@
 		<div>
 			<form name="boardNoticeUpdateForm" id="boardNoticeUpdateForm">
 			<table border="1">
+			<thead>
 			<tr>
 				<td align="center">
 				<font size="4" style="color:blue;"><%= _jbnvo.getJnsubject() %></font>
@@ -254,6 +220,8 @@
 				</font>
 				</td>
 			</tr>
+			</thead>
+			<tbody>
 			<tr>
 				<td align="center">
 				<img class="photo" src="/JDME/upload/notice/<%= _jbnvo.getJnfile()%>" border="1" width="150" height="100" alt="image">
@@ -263,6 +231,8 @@
 					<textarea name="jncontent" id="jncontent" rows="5" cols="50"><%= _jbnvo.getJncontent() %></textarea>
 				</td>
 			</tr>
+			</tbody>
+			<tfoot>
 			<tr>
 				<td align="left">
 				<font size="1" style="color:black;">
@@ -272,10 +242,10 @@
 			<tr>
 				<td colspan="3" align="center">
 					<button type="button" id="insertbtn">공지사항 입력</button>
-					<button type="button" id="updateBtn" disabled>수정</button>
-					<button type="button" id="pwBtn">비밀번호 확인</button>
+					<button type="button" id="updateBtn">수정</button>
 				</td>
 			</tr>
+			</tfoot>
 			</table>
 			</form>
 		</div>

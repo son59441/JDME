@@ -42,4 +42,23 @@ public class JDMEBoardComDAOImpl implements JDMEBoardComDAO {
 		return sqlSession.selectList("jdmeBoardComSelect",jbcvo);
 	}
 
+	// 커뮤니티 게시판 수정하기
+	@Override
+	public int jdmeBoardComUpdate(JDMEBoardComVO jbcvo) {
+		
+		logger.info("JDMEBoardComDAOImpl jdmeBoardComUpdate 함수 진입");
+		return (Integer)sqlSession.insert("jdmeBoardComUpdate",jbcvo);
+	}
+	
+	
+	// 커뮤니티 게시판 비밀번호 체크하기
+	@Override
+	public List<JDMEBoardComVO> jdmeBoardComPwcheck(JDMEBoardComVO jbcvo) {
+		
+		logger.info("JDMEBoardComDAOImpl jdmeBoardComPwcheck 함수 진입");
+		return sqlSession.selectList("jdmeBoardComPwcheck",jbcvo);
+	}
+
+	
+
 }

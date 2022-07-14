@@ -14,6 +14,15 @@ public class JDMEBoardComVO {
 	private String jbudate;
 	
 	
+	
+
+	// 페이징에 필요한 것
+	// 페이징 이동 필드
+	private String pageSize;
+	private String groupSize;
+	private String curPage;
+	private String totalCount;
+
 	public JDMEBoardComVO() {
 		
 	}
@@ -37,9 +46,58 @@ public class JDMEBoardComVO {
 	}
 
 	
+	public JDMEBoardComVO(String pageSize, String groupSize, String curPage, String totalCount) {
+		
+		this.pageSize = pageSize;
+		this.groupSize = groupSize;
+		this.curPage = curPage;
+		this.totalCount = totalCount;
+	}
+
+	
 
 	// setter/getter
 	
+	public String getPageSize() {
+		return pageSize;
+	}
+
+
+	public String getGroupSize() {
+		return groupSize;
+	}
+
+
+	public String getCurPage() {
+		return curPage;
+	}
+
+
+	public String getTotalCount() {
+		return totalCount;
+	}
+
+
+	public void setPageSize(String pageSize) {
+		this.pageSize = pageSize;
+	}
+
+
+	public void setGroupSize(String groupSize) {
+		this.groupSize = groupSize;
+	}
+
+
+	public void setCurPage(String curPage) {
+		this.curPage = curPage;
+	}
+
+
+	public void setTotalCount(String totalCount) {
+		this.totalCount = totalCount;
+	}
+
+
 	public String getJmid() {
 		return jmid;
 	}

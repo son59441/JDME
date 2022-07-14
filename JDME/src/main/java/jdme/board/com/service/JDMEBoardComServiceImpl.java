@@ -50,6 +50,25 @@ public class JDMEBoardComServiceImpl implements JDMEBoardComService {
 		logger.info("JDMEBoardComServiceImpl jdmeBoardComSelect 함수 진입");
 		return jdmeBoardComDAO.jdmeBoardComSelect(jbcvo);
 	}
+
+	// 커뮤니티 게시판 수정하기
+	@Override
+	public int jdmeBoardComUpdate(JDMEBoardComVO jbcvo) {
+		
+		logger.info("JDMEBoardComServiceImpl jdmeBoardComUpdate 함수 진입");
+		return jdmeBoardComDAO.jdmeBoardComUpdate(jbcvo);
+	}
+	
+	
+	// 커뮤니티 게시판 수정 할 때 비밀번호 체크하기
+	@Override
+	public List<JDMEBoardComVO> jdmeBoardComPwcheck(JDMEBoardComVO jbcvo) {
+		
+		logger.info("JDMEBoardComServiceImpl jdmeBoardComPwcheck 함수 진입");
+		return jdmeBoardComDAO.jdmeBoardComPwcheck(jbcvo);
+	}
+
+
 	
 		
 	

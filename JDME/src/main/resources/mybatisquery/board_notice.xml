@@ -34,7 +34,9 @@
 <!-- 커뮤니티 전체 게시판 조회 -->
 <select id="jdmeBoardNoticeSelectAll" parameterType="jdmeboardnoticevo" resultType="jdmeboardnoticevo">
 
-		SELECT 
+
+		SELECT 	* FROM
+		 (SELECT
 			   A.JNNUM       JNNUM
 			  ,A.ADMIN		 ADMIN
 			  ,A.JNSUBJECT   JNSUBJECT
@@ -43,11 +45,19 @@
 			  ,A.JNDYN       JNDYN
 			  ,TO_CHAR(A.JNIDATE,'YYYY-MM-DD') JNIDATE
 			  ,TO_CHAR(A.JNUDATE,'YYYY-MM-DD') JNUDATE
-			
-		FROM JDME_BOARD_NOTICE A
+		     <!--   ? : 페이지 사이즈 : pageSize   -->
+		      ,CEIL(ROW_NUMBER() OVER(ORDER BY A.JNNUM)/ #{pageSize} ) pageSize 
+		      ,COUNT(A.JNNUM) OVER() AS totalCount				   											
 		
-		WHERE A.JNDYN = 'Y'
-		ORDER BY 1 DESC
+		 FROM JDME_BOARD_NOTICE A 
+		
+		 WHERE A.JNDYN = 'Y'
+		
+		)
+		 <!--   ? : 현재 페이지 : curPage  --> 
+		 WHERE pageSize = #{curPage}
+		
+
 
 
 </select>	

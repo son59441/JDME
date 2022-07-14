@@ -42,4 +42,20 @@ public class JDMEBoardQnaDAOImpl implements JDMEBoardQnaDAO {
 		return sqlSession.selectList("jdmeBoardQnaSelect",jbqvo);
 	}
 
+	// 질문 게시판 수정하기
+	@Override
+	public int jdmeBoardQnaUpdate(JDMEBoardQnaVO jbqvo) {
+		
+		logger.info("JDMEBoardQnaDAOImpl jdmeBoardQnaUpdate 함수 진입");
+		return (Integer)sqlSession.insert("jdmeBoardQnaUpdate", jbqvo);
+	}
+
+	// 질문 게시판 수정 할 때 비밀번호 체크하기
+	@Override
+	public List<JDMEBoardQnaVO> jdmeBoardQnaPwcheck(JDMEBoardQnaVO jbqvo) {
+		
+		logger.info("JDMEBoardQnaDAOImpl jdmeBoardQnaPwcheck 함수 진입");
+		return sqlSession.selectList("jdmeBoardQnaPwcheck",jbqvo);
+	}
+
 }

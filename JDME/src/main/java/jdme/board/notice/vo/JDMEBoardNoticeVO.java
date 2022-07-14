@@ -11,6 +11,13 @@ public class JDMEBoardNoticeVO {
 	private String jnidate;
 	private String jnudate;
 	
+	// 페이징에 필요한 것
+	// 페이징 이동 필드
+	private String pageSize;
+	private String groupSize;
+	private String curPage;
+	private String totalCount;
+
 	
 	public JDMEBoardNoticeVO() {
 		
@@ -32,6 +39,14 @@ public class JDMEBoardNoticeVO {
 		this.jnudate = jnudate;
 	}
 
+	
+	public JDMEBoardNoticeVO(String pageSize, String groupSize, String curPage, String totalCount) {
+		
+		this.pageSize = pageSize;
+		this.groupSize = groupSize;
+		this.curPage = curPage;
+		this.totalCount = totalCount;
+	}
 
 	
 	
@@ -131,9 +146,53 @@ public class JDMEBoardNoticeVO {
 	}
 
 		
+	public String getPageSize() {
+		return pageSize;
+	}
+
+
+
+	public String getGroupSize() {
+		return groupSize;
+	}
+
+
+
+	public String getCurPage() {
+		return curPage;
+	}
+
+
+
+	public String getTotalCount() {
+		return totalCount;
+	}
+
+
+
+	public void setPageSize(String pageSize) {
+		this.pageSize = pageSize;
+	}
+
+
+
+	public void setGroupSize(String groupSize) {
+		this.groupSize = groupSize;
+	}
+
+
+
+	public void setCurPage(String curPage) {
+		this.curPage = curPage;
+	}
+
+
+
+	public void setTotalCount(String totalCount) {
+		this.totalCount = totalCount;
+	}
+
+
+
 		
-	
-	
-	
-	
 }

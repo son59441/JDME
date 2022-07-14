@@ -5,6 +5,7 @@ import jdme.board.notice.vo.JDMEBoardNoticeVO;
 import jdme.board.qna.vo.JDMEBoardQnaVO;
 import jdme.board.qnareply.vo.JDMEBoardQnaReplyVO;
 import jdme.board.reply.vo.JDMEBoardReplyVO;
+import jdme.member.vo.JDMEMemberVO;
 
 public interface ChabunService {
 	
@@ -13,6 +14,6 @@ public interface ChabunService {
 	public JDMEBoardNoticeVO getBoardNoticeChabun();
 	public JDMEBoardQnaVO getBoardQnaChabun();
 	public JDMEBoardQnaReplyVO getBoardQnaReplyChabun();
-	
+	public JDMEMemberVO getMemberChabun();
 	
 }

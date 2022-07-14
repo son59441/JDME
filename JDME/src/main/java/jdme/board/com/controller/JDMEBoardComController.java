@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import jdme.board.com.service.JDMEBoardComService;
 import jdme.board.com.vo.JDMEBoardComVO;
@@ -25,15 +26,10 @@ public class JDMEBoardComController {
 	Logger logger = LogManager.getLogger(JDMEBoardComController.class);
 	
 	// @Autowired를 설정한 메서드가 자동으로 호출되고, 인스턴스가 자동으로 주입
-	private ChabunService chabunService;
-	private JDMEBoardComService jdmeBoardComService;
-	
 	@Autowired(required=false)
-	public JDMEBoardComController(ChabunService chabunService
-							     ,JDMEBoardComService jdmeBoardComService) {
-		this.chabunService = chabunService;
-		this.jdmeBoardComService = jdmeBoardComService;
-	}
+	private ChabunService chabunService;
+	@Autowired(required=false)
+	private JDMEBoardComService jdmeBoardComService;
 	
 	
 	// 커뮤니티 게시판 등록하는 페이지
@@ -96,6 +92,28 @@ public class JDMEBoardComController {
 	public String jdmeBoardComSelectAll(JDMEBoardComVO jbcvo, Model model) {
 		logger.info("JDMEBoardComController jdmeBoardComSelectAll 함수진입");
 		
+		// 페이징 처리 하기 위한 작업 
+		int pageSize = CommonUtils.BOARD_PAGE_SIZE;
+		int groupSize = CommonUtils.BOARD_GROUP_SIZE;
+		int curPage = CommonUtils.BOARD_CUR_PAGE;
+		int totalCount = CommonUtils.BOARD_TOTAL_COUNT;
+				
+		// 페이지가 넘어 가는 지 체크해주기 위함
+		if (jbcvo.getCurPage() !=null){
+			curPage = Integer.parseInt(jbcvo.getCurPage());
+		}
+		
+		// 담아주기 위한 작업 형변환이 필요한 작업
+		jbcvo.setPageSize(String.valueOf(pageSize));
+		jbcvo.setGroupSize(String.valueOf(groupSize));
+		jbcvo.setCurPage(String.valueOf(curPage));
+		jbcvo.setTotalCount(String.valueOf(totalCount));
+		
+		logger.info("getPageSize --> : " + jbcvo.getPageSize());
+		logger.info("getGroupSize --> : " + jbcvo.getGroupSize());
+		logger.info("getCurPage --> : " + jbcvo.getCurPage());
+		logger.info("getTotalCount --> : " + jbcvo.getTotalCount());
+		
 		
 		// 서비스 호출하기
 		List<JDMEBoardComVO> listAll = jdmeBoardComService.jdmeBoardComSelectAll(jbcvo);
@@ -104,12 +122,13 @@ public class JDMEBoardComController {
 			
 			logger.info("listAll --> : " + listAll);
 			
+			model.addAttribute("pagingCom", jbcvo);
 			model.addAttribute("listAll",listAll);
 			return "board/JDMEBoardComSelectAll";
 			
 		}
 	
-		return "board/JDMEBoardComSelectAll";	
+		return "board/JDMEBoardComInsertForm";	
 	}
 
 	// 조건조회로 커뮤니티 게시판 보기
@@ -117,6 +136,8 @@ public class JDMEBoardComController {
 	public String jdmeBoardComSelect(HttpServletRequest req, Model model, JDMEBoardComVO jbcvo) {
 		
 		logger.info("JDMEBoardComController jdmeBoardComSelect 함수 진입 ");		
+		logger.info("jbnum --> : " + jbcvo.getJbnum());
+		logger.info("jmnum --> : " + jbcvo.getJmnum());
 		
 		List<JDMEBoardComVO> listS = jdmeBoardComService.jdmeBoardComSelect(jbcvo);
 		
@@ -128,9 +149,58 @@ public class JDMEBoardComController {
 			
 		}
 		
-		return "board/JDMEBoardSelectAll";
+		return "board/JDMEBoardComSelectAll";
 				
 	}
 
+	// 수정하기
+	@GetMapping(value="JDMEBoardComUpdate")
+	public String jdmeBoardComUpdate(HttpServletRequest req, JDMEBoardComVO jbcvo, Model model) {
+		
+		logger.info("JDMEBoardComController jdmeBoardComUpdate 함수 진입");
+		String jbcontent = req.getParameter("jbcontent");
+		String jbnum = req.getParameter("jbnum");
+		
+		JDMEBoardComVO _jbcvo = null;
+		
+		_jbcvo = new JDMEBoardComVO();
+		
+		_jbcvo.setJbcontent(jbcontent);
+		_jbcvo.setJbnum(jbnum);
+		logger.info("jqcontent --> : " + _jbcvo.getJbcontent());
+		logger.info("jqnum --> : " + _jbcvo.getJbnum());
+		
+		int uCnt = jdmeBoardComService.jdmeBoardComUpdate(_jbcvo);
+		
+		if(uCnt > 0) {
+			logger.info("uCnt --> : " + uCnt);
+			model.addAttribute("uCnt",uCnt);
+			return "board/JDMEBoardComUpdate";
+		}
+		return "board/JDMEBoardComSelectAll";
+	}
+	
+	// 커뮤니티 게시판 수정 할 때 비밀번호 체크
+	@PostMapping(value="JDMEBoardComPwcheck")
+	@ResponseBody
+	public Object jdmeBoardComPwcheck(JDMEBoardComVO jbcvo) {
+		
+		logger.info("JDMEBoardComController jdmeBoardComPwcheck 함수 진입");
+		
+		logger.info("jbcvo.getjbpw --> : "  + jbcvo.getJbpw());
+		
+		List<JDMEBoardComVO> list = jdmeBoardComService.jdmeBoardComPwcheck(jbcvo);
+		
+		String msg = "";
+		if(list.size() == 1) {
+			msg = "PW_YES";
+		}else {
+			msg = "PW_NO";
+		}
+		
+		logger.info("msg --> : " + msg);
+		return msg;
+	}
+		
 	
 }

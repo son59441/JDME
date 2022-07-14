@@ -100,12 +100,32 @@ public class JDMEBoardNoticeController {
 		
 		logger.info("JDMEBoarcdNoticeController jdmeBoardNoticeSelectAll 함수 진입");
 		
+		// 페이징 처리 하기 위한 작업 
+		int pageSize = CommonUtils.BOARD_PAGE_SIZE;
+		int groupSize = CommonUtils.BOARD_GROUP_SIZE;
+		int curPage = CommonUtils.BOARD_CUR_PAGE;
+		int totalCount = CommonUtils.BOARD_TOTAL_COUNT;
+						
+		
+		// 페이지가 넘어 가는 지 체크해주기 위함
+		if (jbnvo.getCurPage() !=null){
+			curPage = Integer.parseInt(jbnvo.getCurPage());
+		}
+		
+		// 담아주기 위한 작업 형변환이 필요한 작업
+		jbnvo.setPageSize(String.valueOf(pageSize));
+		jbnvo.setGroupSize(String.valueOf(groupSize));
+		jbnvo.setCurPage(String.valueOf(curPage));
+		jbnvo.setTotalCount(String.valueOf(totalCount));
+		
+		
 		// 서비스 호출하기
 		List<JDMEBoardNoticeVO> listAll = jdmeBoardNoticeService.jdmeBoardNoticeSelectAll(jbnvo);
 		if(listAll.size() > 0) {
 			
 			logger.info("listAll --> : " + listAll);
 			
+			model.addAttribute("pagingNotice", jbnvo);
 			model.addAttribute("listAll",listAll);
 			return "notice/JDMEBoardNoticeSelectAll";
 			

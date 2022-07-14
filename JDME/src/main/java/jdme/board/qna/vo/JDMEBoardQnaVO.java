@@ -7,10 +7,20 @@ public class JDMEBoardQnaVO {
 	private String jqsubject;
 	private String jmid;
 	private String jqcontent;
+	private String jqpw;
 	private String jqfile;
 	private String jqdyn;
 	private String jqidate;
 	private String jqudate;
+	
+	
+	// 페이징에 필요한 것
+	// 페이징 이동 필드
+	private String pageSize;
+	private String groupSize;
+	private String curPage;
+	private String totalCount;
+
 	
 	
 	public JDMEBoardQnaVO() {
@@ -20,7 +30,7 @@ public class JDMEBoardQnaVO {
 	
 	
 	public JDMEBoardQnaVO(String jqnum, String jmnum, String jqsubject,String jmid, 
-						  String jqcontent, String jqfile, String jqdyn,
+						  String jqcontent, String jqfile, String jqdyn, String jqpw,
 						  String jqidate, String jqudate) {
 		
 		this.jqnum = jqnum;
@@ -28,17 +38,85 @@ public class JDMEBoardQnaVO {
 		this.jqsubject = jqsubject;
 		this.jmid = jmid;
 		this.jqcontent = jqcontent;
+		this.jqpw = jqpw;
 		this.jqfile = jqfile;
 		this.jqdyn = jqdyn;
 		this.jqidate = jqidate;
 		this.jqudate = jqudate;
 	}
 
+	public JDMEBoardQnaVO(String pageSize, String groupSize, String curPage, String totalCount) {
+		
+		this.pageSize = pageSize;
+		this.groupSize = groupSize;
+		this.curPage = curPage;
+		this.totalCount = totalCount;
+	}
 
 
 
 	// setter / getter
 	
+	public String getJqpw() {
+		return jqpw;
+	}
+
+
+
+	public String getPageSize() {
+		return pageSize;
+	}
+
+
+
+	public String getGroupSize() {
+		return groupSize;
+	}
+
+
+
+	public String getCurPage() {
+		return curPage;
+	}
+
+
+
+	public String getTotalCount() {
+		return totalCount;
+	}
+
+
+
+	public void setPageSize(String pageSize) {
+		this.pageSize = pageSize;
+	}
+
+
+
+	public void setGroupSize(String groupSize) {
+		this.groupSize = groupSize;
+	}
+
+
+
+	public void setCurPage(String curPage) {
+		this.curPage = curPage;
+	}
+
+
+
+	public void setTotalCount(String totalCount) {
+		this.totalCount = totalCount;
+	}
+
+
+
+	public void setJqpw(String jqpw) {
+		this.jqpw = jqpw;
+	}
+
+
+
 	public String getJmid() {
 		return jmid;
 	}

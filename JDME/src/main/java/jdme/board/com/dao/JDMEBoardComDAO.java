@@ -12,6 +12,7 @@ public interface JDMEBoardComDAO {
 	public int jdmeBoardComInsert(JDMEBoardComVO jbcvo);
 	public List<JDMEBoardComVO> jdmeBoardComSelectAll(JDMEBoardComVO jbcvo);
 	public List<JDMEBoardComVO> jdmeBoardComSelect(JDMEBoardComVO jbcvo);
-	
+	public List<JDMEBoardComVO> jdmeBoardComPwcheck(JDMEBoardComVO jbcvo);
+	public int jdmeBoardComUpdate(JDMEBoardComVO jbcvo);
 	
 }

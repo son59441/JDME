@@ -58,7 +58,7 @@
 		 JQRDYN   = 'N'
 		,JQRDATE = SYSDATE	
 	
-	WHERE JRDYN = 'Y' 
+	WHERE JQRDYN = 'Y' 
 	AND JQRNUM = #{jqrnum}
 
 

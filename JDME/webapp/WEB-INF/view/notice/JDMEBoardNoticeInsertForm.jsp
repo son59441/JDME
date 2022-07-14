@@ -1,5 +1,44 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
+<%@ page import="jdme.common.K_Session" %>
+<%@ page import="java.io.PrintWriter" %>
+<%@ page import="org.apache.log4j.LogManager" %>
+<%@ page import="org.apache.log4j.Logger" %>
+
+<%
+
+	Logger logger = LogManager.getLogger(this.getClass());
+	logger.info("JDMEBoardNoticeInsertForm.jsp 페이지 진입");
+	
+	K_Session ks = K_Session.getInstance();
+	
+	logger.info("ks >>> " + ks);
+	
+	logger.info("세션키 확인  >>> : "+session.getAttribute("KID"));
+	
+	
+	String KID = null;
+	
+	if(session.getAttribute("KID")!=null){
+		
+		KID = (String)session.getAttribute("KID");
+		logger.info("KID >>> : " + KID);
+		
+	}else {
+		
+		PrintWriter pw = response.getWriter();
+		pw.println("<script>");
+		pw.println("alert('관리자 전용 페이지입니다.');");
+		pw.println("location.href='/JDME/jdmeLoginForm.jdme'");
+		pw.println("</script>");
+	}
+
+
+
+
+%>    
+    
 <!DOCTYPE html>
 <html>
 	<head>
@@ -40,6 +79,7 @@
 	
 	</script>
 	<link href="css/sidebar.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="css/ui.css">
 	<style type="text/css">
 		
 		.wrap{
@@ -71,14 +111,14 @@
 	        <div class="sidebar">
 	           <!--profile image & text-->
 	           <div class="profile">
-	                <img src="https://img.sbs.co.kr/newimg/news/20220503/201660848_1280.jpg" alt="profile_picture">
+	                <img src="/JDME/img/son.jpg" alt="profile_picture">
 	                <h3>Sonny</h3>
 	                <p>SoccerPlayer</p>
          		</div>
 	            <!--menu item-->
 	            <ul>
                 <li>
-                    <a href="test.jdme" class="active">
+                    <a href="/JDME/index.jsp" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
                         <span class="item">Main</span>
                     </a>
@@ -122,41 +162,50 @@
             </ul>
         </div>
 	    </div>
-		<h3 align="center">공지사항 게시판 등록</h3>
-		<hr>
-		<form name="boardNoticeForm" id="boardNoticeForm">
-		<table border="3" class="wrap">
-		<tr>
-			<td colspan="2" align="center">공지사항 게시판</td>				
-		</tr>
-		<tr>
-			<td class="tt">글번호</td>
-			<td><input type="text" name="jnnum" id="jnnum" size="30" readonly></td>
-		</tr>
-		<tr>
-			<td class="tt">제목</td>
-			<td><input type="text" name="jnsubject" id="jnsubject" size="30"></td>
-		</tr>
-		<tr>
-			<td class="tt">내용</td>
-			<td>
-			<textarea name="jncontent" id="jncontent" cols="50" rows="10"></textarea>
-		</td>
-		</tr>
-		<tr>
-			<td class="tt">사진</td>
-			<td>
-			<input type="file" name="jnfile" id="jnfile">
-		</td>
-		</tr>
-		<tr>
-			<td colspan="2" align="center">				
-				<input type="button" value="글쓰기" id="jnBtn">
-				<input type="hidden" name="admin" id="admin" value="admin"/>
-				<input type="reset" value="취소">
-			</td>			
-		</tr>
-		</table>
-		</form>
+	    <section id="container">
+		<div class="conbox">
+ 	 		<section class="content_wrap">
+ 	 			<h3 class="form_tit">공지사항 !!</h3>
+				<form name="boardNoticeForm" id="boardNoticeForm">
+				<fieldset>
+					<div class="formlist">
+	                  <ul>
+	                    <li>
+	                      <label for="number" >글번호 : </label>
+	                      <span class="inputbox">
+	                      	<input type="text" id="jnnum" name="jnnum" readonly placeholder="빈 칸으로 두세요."/>
+	                      </span>
+	                    </li>
+	                    <li>
+	                      <label for="subject">제목 : </label>
+	                      <span class="inputbox">
+	                      	<input type="text" id="jnsubject" name="jnsubject" placeholder="제목을 작성해주세요." />
+	                      </span>
+	                    </li>
+	                    <li>
+	                      <label for="content">내용 :</label>
+	                      <span class="textbox">
+	                        <textarea id="jncontent" name="jncontent" placeholder="내용을 작성해 주세요"></textarea>
+	                      </span>
+	                    </li>
+	                    <li>
+	                      <label for="photo">사진</label>
+	                      <span class="imgbox">
+	                        <input type="file" name="jnfile" />
+	                      </span>
+	                    </li>
+	                  </ul>
+	                  <div class="btn_box">
+	                      <input type="button" value="글쓰기" id="jnBtn">
+						  <input type="hidden" name="jmnum" id="jmnum" value="M0003"/>
+						  <input type="hidden" name="jmid" id="jmid" value="Son"/>
+						  <input type="reset" value="취소">
+	                  </div>
+	                </div>
+				</fieldset>
+			</form>
+ 	 		</section>
+		</div>
+		</section>
 	</body>
 </html>

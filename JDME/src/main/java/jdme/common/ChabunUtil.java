@@ -7,7 +7,7 @@ public abstract class ChabunUtil {
 	public static final String BIZ_GUBUN_N = "N"; // 공지사항 게시판 채번
 	public static final String BIZ_GUBUN_Q = "Q"; // Q&A 게시판 채번
 	public static final String BIZ_GUBUN_QR = "QR"; // Q&A 댓글 게시판 채번
-	
+	public static final String BIZ_MEMBER_PRODUCT = "M"; // 회원가입 게시판 채번
 			
 	public static String numPad(String t, String c){
 
@@ -45,6 +45,11 @@ public abstract class ChabunUtil {
 		return BIZ_GUBUN_QR.concat(ChabunUtil.numPad(type, sjs));									
 	}
 	
+	//멤버 채번번호
+	public static String getMemChabun(String type,String sjs) {
+			
+		return BIZ_MEMBER_PRODUCT.concat(ChabunUtil.numPad(type, sjs));									
+	}	
 	
 	
 	public static void main(String[] args) {

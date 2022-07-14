@@ -74,6 +74,8 @@ public class JDMEBoardQnaReplyController {
 		logger.info("JDMEBoardQnaReplyController JDMEBoardQnaReplySelectAll 함수 진입");
 		logger.info("jqnum --> : " + jbqrvo.getJqnum());
 		
+		
+		
 		List<JDMEBoardQnaReplyVO> list = jdmeBoardQnaReplyService.jdmeBoardQnaReplySelectAll(jbqrvo);
 		logger.info("list --> : " + list);
 		

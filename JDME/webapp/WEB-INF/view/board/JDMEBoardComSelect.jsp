@@ -46,16 +46,16 @@
 			
 			// 비밀번호 확인해주기
 			$(document).on('click','#pwBtn',function(){
-				let input_kbpw = prompt("비밀번호를 입력해주세요.");
+				let input_jbpw = prompt("비밀번호를 입력해주세요.");
 				
-				if(input_kbpw.length > 0){
-					console.log(input_kbpw);
+				if(input_jbpw.length > 0){
+					console.log(input_jbpw);
 					
-					let pwcheckURL = "kosmoBoardPwCheck.s";
+					let pwcheckURL = "JDMEBoardComPwcheck.jdme";
 					let reqType = "POST";
 					let dataParam = {
-						kbnum: $("#kbnum").val(),
-						kbpw: input_kbpw,
+						jbnum: $("#jbnum").val(),
+						jbpw: input_jbpw,
 					};
 					
 					console.log("dataParam --> : " + dataParam);
@@ -73,14 +73,14 @@
 					
 					function whenSuccess(resData){	
 						console.log("resData --> : " + resData);					
-						if ("ID_YES" == resData){					
-							alert("비밀번호 GOOD.");												
-							$("#updateBtn").css('background-color','yellow');	
+						if ("PW_YES" == resData){					
+							alert("비밀번호가 일치합니다.");												
+							$("#updateBtn").css('background-color','#a9ded6');	
 							if($("#updateBtn").prop("disabled")==true){
 								  $("#updateBtn").attr("disabled", false);
 							}
-						}else if ("ID_NO" == resDataFlag){
-							alert("비밀번호 BAD.");
+						}else if ("PW_NO" == resData){
+							alert("비밀번호 일치하지 않습니다.");
 							return;
 						};				
 					}
@@ -93,22 +93,6 @@
 				
 			}) // end of pwChk
 			
-			$.ajax({
-				url:"kosmoGetKmnum.s",
-				type:"POST",				
-				success:whenSuccess,
-				error:whenError
-			});
-			
-			function whenSuccess(resData){
-				console.log("resData >>> " + resData);		
-				$("#kmnum").val(resData);
-				//alert($("#kmnum").val());
-			}
-			
-			function whenError(e){
-				console.log("e >>> " + e.responseText);
-			}
 			
 			
 			// insert버튼
@@ -192,7 +176,7 @@
 	            <!--menu item-->
 	            <ul>
                 <li>
-                    <a href="test.jdme" class="active">
+                    <a href="/JDME/index.jsp" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
                         <span class="item">Main</span>
                     </a>

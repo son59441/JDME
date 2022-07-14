@@ -16,6 +16,7 @@
    
 	</head>
 	<body>
+		<%@include file ="/WEB-INF/include/header_test.jsp" %>
 		<div class="wrapper">
 	        <!--Top menu -->
 	        <div class="sidebar">
@@ -28,7 +29,7 @@
 	            <!--menu item-->
 	            <ul>
                 <li>
-                    <a href="test.jdme" class="active">
+                    <a href="/JDME/index.jsp" class="active">
                         <span class="icon"><i class="fas fa-home"></i></span>
                         <span class="item">Main</span>
                     </a>
@@ -67,6 +68,30 @@
                     <a href="JDMEBoardQnaSelectAll.jdme">
                         <span class="icon"><i class="fas fa-user-friends"></i></span>
                         <span class="item">Q&A</span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="chatLogin.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">채팅로그인</span>
+                    </a>
+                </li>
+                <li>
+                   <a href="jdmeMemberInsertForm.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">멤버 I</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="jdmeMainPage.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">메인페이지</span>
+                    </a>
+                </li>
+                 <li>
+                    <a href="jdmeLoginForm.jdme">
+                        <span class="icon"><i class="fas fa-user-friends"></i></span>
+                        <span class="item">로그인 테스트</span>
                     </a>
                 </li>
             </ul>

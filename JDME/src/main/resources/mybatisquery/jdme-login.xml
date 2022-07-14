@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+          "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jdme.login.dao.JDMELoginDAO">
+
+<!-- 로그인체크 -->
+	<select id="jdmeLoginCheck" parameterType="jmvo" resultType="jmvo">
+		SELECT 		
+		        A.JMID 		JMID
+		       ,A.JMPW 		JMPW      
+		FROM 	JDME_MEMBER A
+		WHERE 	A.DELETEYN = 'Y' 	
+		AND    A.JMID = #{jmid} 
+		AND    A.JMPW = #{jmpw}
+	</select>
+	
+	
+	
+	
+	
+<!-- 이메일로 ID 찾기  -->
+	<select id="emailCheck" parameterType="jmvo" resultType="jmvo">	
+		SELECT 	 A.JMNAME JMNAME
+		   		,A.JMEMAIL JMEMAIL 
+		FROM 	JDME_MEMBER A 
+		WHERE 	A.DELETEYN = 'Y'
+		AND   	A.JMNAME = #{jmname}	                          	 
+		AND   	A.JMEMAIL = #{jmemail} 
+	</select>
+	
+	<insert id="tempAuthNumInsert" parameterType="authnumvo">
+		<selectKey keyProperty="anum" resultType="int" order="BEFORE">
+	 		SELECT AUTHNUM_SEQ.NEXTVAL FROM DUAL
+	 	</selectKey>
+		INSERT INTO TEMP_AUTH_NUM ( ANUM, AUTHNUM, JMEMAIL, INSERTDATE) 
+		                  VALUES ( #{anum}, #{authnum}, #{jmemail}, SYSDATE)	                          
+	</insert>
+	
+	<select id="emailIdFind" parameterType="jmvo" resultType="jmvo">	
+		SELECT 
+				 A.JMID           JMID
+		      	,A.INSERTDATE    INSERTDATE
+		FROM     JDME_MEMBER A
+		        ,TEMP_AUTH_NUM B
+		WHERE    A.DELETEYN = 'Y'
+		AND      A.JMEMAIL = B.JMEMAIL
+		AND      B.JMEMAIL = #{tempauthmemail}
+		AND      B.AUTHNUM = #{tempauthnum}
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	<!-- 아이디로 비밀번호 찾기  -->
+	<select id="pwIdCheck" parameterType="jmvo" resultType="jmvo">	
+		SELECT 	A.JMID JMID 
+		FROM 	JDME_MEMBER A 
+		WHERE 	A.DELETEYN = 'Y'
+		AND   	A.JMID = #{jmid}
+	</select>
+	
+	<select id="pwEmailCheck" parameterType="jmvo" resultType="jmvo">	
+		SELECT 	 A.JMID JMID
+				,A.JMEMAIL JMEMAIL 
+		FROM 	JDME_MEMBER A 
+		WHERE 	A.DELETEYN = 'Y'
+		AND   	A.JMID = #{jmid}	  
+		AND   	A.JMEMAIL = #{jmemail}	                        	  
+	</select>
+	
+	<insert id="tempPwInsert" parameterType="tpwvo">
+		<selectKey keyProperty="jmnum" resultType="String" order="BEFORE">
+	 		SELECT LPAD((NVL(MAX(A.JMNUM), 0)) + 1, 8, '0') JMNUM FROM TEMP_PW A
+	 	</selectKey>
+		INSERT INTO TEMP_PW ( JMNUM, JMTEMPPW, JMID, INSERTDATE) 
+		             VALUES ( #{jmnum}, #{jmtemppw}, #{jmid}, SYSDATE)	                          
+	</insert>
+	
+	<update id="pwUpdate"  parameterType="cpwvo">
+	UPDATE  JDME_MEMBER A
+	SET     A.JMPW = #{jmpw}
+	WHERE   A.JMID=(SELECT B.JMID
+	                FROM JDME_MEMBER A, TEMP_PW B
+	                WHERE A.JMID=B.JMID
+	                AND B.JMTEMPPW=#{jmtemppw}
+	               )
+	</update>	
+</mapper>
